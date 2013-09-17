@@ -1,7 +1,10 @@
 SpreeFavoriteProducts
 =====================
 
-Introduction goes here.
+This extension adds the following features:
+1. Adds a link 'Mark as favorite' on product detail page.
+2. Favorite Products tab on header
+3. Favorite Products tab in admin section 
 
 Installation
 ------------
