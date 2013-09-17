@@ -1,0 +1,25 @@
+<div data-hook="account_my_favorite_products" class="account-my-favorite-products commonform">
+  <h3><%= Spree.t(:my_favorite_products) %></h3>
+  <% if @favorite_products.present? %>
+    <table class="favorite-products order-summary">
+      <thead>
+      <tr>
+        <th class="favorite-product-image"><%= Spree.t(:product_image) %></th>
+        <th class="favorite-product-name"><%= Spree.t(:product_name) %></th>
+        <th class="favorite-product-action">Remove</th>        
+      </tr>
+      </thead>
+      <tbody>
+      <% @favorite_products.each do |product| %>
+        <tr class="<%= cycle('even', 'odd') %>" id="favorite_product_<%= product.id %>">
+          <td class="favorite-product-image"><%= link_to small_image(product), product_path(product) %></td>
+          <td class="favorite-product-name"><%= product.name %></td>
+          <td class="favorite-product-remove"><%= link_to 'remove', favorite_product_path(product), :method => :delete, :remote => true %>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p><%= Spree.t(:you_have_no_favorite_products_yet) %></p>
+  <% end %>
+</div>

@@ -1,0 +1,6 @@
+<% if @success %>
+  $("#favorite_product_<%= @product_id%>").remove();
+  alert("Successfully removed favorite product from your list")
+<% else %>
+  alert("Could not remove product form your list")
+<% end %>

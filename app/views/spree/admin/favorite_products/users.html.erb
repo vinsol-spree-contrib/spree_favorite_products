@@ -1,0 +1,32 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:listing_favorite_products_users) %>
+<% end %>
+
+<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
+
+<%= paginate @users %>
+
+<% if @users.any? %>
+  <table class="index" id="listing_favorite_products_users">
+    <thead>
+      <tr data-hook="admin_products_index_headers">
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td>
+            <%= user.email %>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= Spree.t(:no_results) %>
+  </div>
+<% end %>
+
+<%= paginate @users %>
+
