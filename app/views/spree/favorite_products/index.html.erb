@@ -6,7 +6,7 @@
       <tr>
         <th class="favorite-product-image"><%= Spree.t(:product_image) %></th>
         <th class="favorite-product-name"><%= Spree.t(:product_name) %></th>
-        <th class="favorite-product-action">Remove</th>        
+        <th class="favorite-product-action">Action</th>        
       </tr>
       </thead>
       <tbody>
@@ -14,7 +14,7 @@
         <tr class="<%= cycle('even', 'odd') %>" id="favorite_product_<%= product.id %>">
           <td class="favorite-product-image"><%= link_to small_image(product), product_path(product) %></td>
           <td class="favorite-product-name"><%= product.name %></td>
-          <td class="favorite-product-remove"><%= link_to 'remove', favorite_product_path(product), :method => :delete, :remote => true %>
+          <td class="favorite-product-remove"><%= link_to 'Remove', favorite_product_path(product), :method => :delete, :remote => true %>
         </tr>
       <% end %>
       </tbody>
