@@ -1,4 +1,4 @@
-SpreeFavoriteProducts
+SpreeFavoriteProducts [![Code Climate](https://codeclimate.com/github/vinsol/spree_favorite_products.png)](https://codeclimate.com/github/vinsol/spree_favorite_products)
 =====================
 
 This extension adds the following features:
