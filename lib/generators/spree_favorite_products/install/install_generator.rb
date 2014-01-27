@@ -5,8 +5,8 @@ module SpreeFavoriteProducts
       class_option :auto_run_migrations, :type => :boolean, :default => false
 
       def add_javascripts
-        append_file 'app/assets/javascripts/store/all.js', "//= require store/spree_favorite_products\n"
-        append_file 'app/assets/javascripts/admin/all.js', "//= require admin/spree_favorite_products\n"
+        append_file 'app/assets/javascripts/store/all.js', "\n//= require store/spree_favorite_products\n"
+        append_file 'app/assets/javascripts/admin/all.js', "\n//= require admin/spree_favorite_products\n"
       end
 
       def add_stylesheets
