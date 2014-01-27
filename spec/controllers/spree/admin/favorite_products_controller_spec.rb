@@ -46,7 +46,9 @@ describe Spree::Admin::FavoriteProductsController do
 
   describe "#users" do
     before do
-      product.stub(:favorite_users).and_return([@user])
+      @users = [@user]
+      @users.stub(:page).and_return(@users)
+      product.stub(:favorite_users).and_return(@users)
       @products = [product]
       Spree::Product.stub(:where).with(:id => product.id).and_return(@products)
     end
@@ -60,7 +62,7 @@ describe Spree::Admin::FavoriteProductsController do
     end
 
     it 'fetches the users who marked the product as favorite' do
-      product.should_receive(:favorite_users).and_return([@user])
+      product.should_receive(:favorite_users).and_return(@users)
     end
 
     after do

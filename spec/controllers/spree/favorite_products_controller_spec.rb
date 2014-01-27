@@ -9,6 +9,18 @@ describe Spree::FavoriteProductsController do
     end
   end
 
+  shared_examples_for "request which finds favorite product" do
+    it "finds favorite product" do
+      @current_user_favorites.should_receive(:where).with(:spree_products => {:permalink => 'permalink'})
+      send_request
+    end
+
+    it "assigns @favorite" do
+      send_request
+      assigns(:favorite).should eq(@favorite)
+    end
+  end
+
   describe 'POST create' do
     def send_request
       post :create, :id => 1, :format => :js, :use_route => 'spree'
@@ -95,87 +107,55 @@ describe Spree::FavoriteProductsController do
 
   describe 'destroy' do
     def send_request(params = {})
-      post :destroy, params.merge({:use_route => 'spree', :method => :delete, :format => :js})
+      post :destroy, params.merge({:use_route => 'spree', :method => :delete, :format => :js, :id => 'permalink'})
     end
 
     before do
-      @favorite_product = mock_model(Spree::Favorite)
-      @product = mock_model(Spree::Product, :permalink => 'my_product', :id => 100)
-      @user = mock_model(Spree::User, :favorite_products => [@favorite_product], :generate_spree_api_key! => false, :last_incomplete_spree_order => nil)
+      @favorite = mock_model(Spree::Favorite)
+      @current_user_favorites = double('spree_favorites')
+      @current_user_favorites.stub(:where).and_return([@favorite])
+      @favorites = double('spree_favorites')
+      @favorites.stub(:joins).with(:product).and_return(@current_user_favorites)
+      @user = mock_model(Spree::User, :favorites => @favorites, :generate_spree_api_key! => false, :last_incomplete_spree_order => nil)
       controller.stub(:authenticate_spree_user!).and_return(true)
       controller.stub(:spree_current_user).and_return(@user)
     end
 
     it_behaves_like "request which requires user authentication"
+    it_behaves_like "request which finds favorite product"
 
-    context 'when favorite product entry for the requested product exits' do
-      before do
-        Spree::Product.stub(:where).with(:permalink => @product.permalink).and_return([@product])
-        Spree::Favorite.stub(:where).with("user_id = ? and product_id = ?", @user.id, 100).and_return([@favorite_product])
+    context 'when @favorite  exist' do
+      before(:each) do
+        controller.instance_variable_set(:@favorite, @favorite)
       end
 
-      it 'assigns its id to product_id' do
-        send_request(:id => @product.permalink)
-        assigns(:product_id).should eq(100)
+      it 'destroys' do
+        @favorite.should_receive(:destroy)
+        send_request
       end
 
-      it 'assigns favorite product object to favorite_product' do
-        send_request(:id => @product.permalink)
-        assigns(:favorite_product).should eq(@favorite_product)
-      end
-
-      it 'calls for destroy on the favorite_product' do
-        @favorite_product.should_receive(:destroy)        
-        send_request(:id => @product.permalink)
-      end 
-
-      context 'and is destroyed successfully' do
-        before do
-          @favorite_product.stub(:destroy).and_return(true)
+      context 'when destroyed successfully' do
+        before(:each) do
+          @favorite.stub(:destroy).and_return(true)
         end
 
-        it 'assigns true to success' do
-          send_request(:id => @product.permalink)
-          assigns(:success).should be_true
-        end
+        it "sets @success to true" do
+          send_request
+          assigns(:success).should eq(true)
+        end 
       end
 
-      context 'and is not destroyed successfully' do
-        before do
-          @favorite_product.stub(:destroy).and_return(false)
+      context 'when not destroyed' do
+        before(:each) do
+          @favorite.stub(:destroy).and_return(false)
         end
 
-        it 'assigns false to success' do
-          send_request(:id => @product.permalink)
-          assigns(:success).should be_false
+        it 'sets @success to false' do
+          send_request
+          assigns(:success).should eq(false)
         end
       end
     end
 
-    context 'when favorite product entry for the requested product does not exit' do
-      before do
-        Spree::Product.stub(:where).with(:permalink => @product.permalink).and_return([])
-      end
-
-      it 'does not assign any id to product_id' do
-        send_request(:id => @product.permalink)
-        assigns(:product_id).should be_nil
-      end
-
-      it 'assigns favorite product object to favorite_product' do
-        send_request(:id => @product.permalink)
-        assigns(:favorite_product).should be_nil
-      end
-
-      it 'calls for destroy on the favorite_product' do
-        send_request(:id => @product.permalink)
-        @favorite_product.should_not_receive(:destroy)        
-      end
-
-      it 'assigns false to success' do
-        send_request(:id => @product.permalink)
-        assigns(:success).should be_false
-      end 
-    end
   end
 end
