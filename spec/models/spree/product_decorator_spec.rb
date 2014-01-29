@@ -6,10 +6,11 @@ describe Spree::Product do
 
   describe "Spree::Product.favorite" do
     before(:each) do
-      @favorite_product1 = Spree::Product.create! :name => 'favorite_product1', :price => 100
-      @favorite_product2 = Spree::Product.create! :name => 'favorite_product2', :price => 100
-      @product1 = Spree::Product.create! :name => 'product1', :price => 100
-      @product2 = Spree::Product.create! :name => 'product2', :price => 100
+      shipping_category = Spree::ShippingCategory.create! :name => 'shipping_category'
+      @favorite_product1 = Spree::Product.create! :name => 'favorite_product1', :price => 100, :shipping_category_id => shipping_category.id
+      @favorite_product2 = Spree::Product.create! :name => 'favorite_product2', :price => 100, :shipping_category_id => shipping_category.id
+      @product1 = Spree::Product.create! :name => 'product1', :price => 100, :shipping_category_id => shipping_category.id
+      @product2 = Spree::Product.create! :name => 'product2', :price => 100, :shipping_category_id => shipping_category.id
       @user1 = Spree::User.create! :email => 'user1@example.com', :password => 'example', :password_confirmation => "example"
       @user2 = Spree::User.create! :email => 'user2@example.com', :password => "example", :password_confirmation => 'example'
       @user1.favorites.create! :product_id => @favorite_product1.id
