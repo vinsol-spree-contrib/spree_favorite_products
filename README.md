@@ -40,4 +40,4 @@ Simply add this require statement to your spec_helper:
 require 'spree_favorite_products/factories'
 ```
 
-Copyright (c) 2014 Vinsol, released under the New MIT License
+Copyright (c) 2014 [vinsol.com](http://vinsol.com "Ruby on Rails, iOS and Android developers"), released under the New MIT License
