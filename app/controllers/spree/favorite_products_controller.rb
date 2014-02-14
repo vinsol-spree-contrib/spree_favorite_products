@@ -28,7 +28,7 @@ module Spree
 
     private
       def find_favorite_product
-        @favorite = spree_current_user.favorites.joins(:product).where(:spree_products => {:permalink => params[:id]}).first
+        @favorite = spree_current_user.favorites.joins(:product).readonly(false).where(:spree_products => {:permalink => params[:id]}).first
       end
   end
 end
