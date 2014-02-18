@@ -40,7 +40,7 @@ describe Spree::Admin::FavoriteProductsController do
 
     it "renders favorite products template" do
       send_request
-      response.should render_template(:favorite)
+      response.should render_template(:index)
     end
   end
 

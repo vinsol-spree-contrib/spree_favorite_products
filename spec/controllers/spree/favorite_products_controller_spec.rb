@@ -15,6 +15,11 @@ describe Spree::FavoriteProductsController do
       send_request
     end
 
+    it "sets readonly to false" do
+      @current_user_favorites.should_receive(:readonly).with(false)
+      send_request
+    end
+
     it "assigns @favorite" do
       send_request
       assigns(:favorite).should eq(@favorite)
@@ -114,6 +119,7 @@ describe Spree::FavoriteProductsController do
       @favorite = mock_model(Spree::Favorite)
       @current_user_favorites = double('spree_favorites')
       @current_user_favorites.stub(:where).and_return([@favorite])
+      @current_user_favorites.stub(:readonly).and_return(@current_user_favorites)
       @favorites = double('spree_favorites')
       @favorites.stub(:joins).with(:product).and_return(@current_user_favorites)
       @user = mock_model(Spree::User, :favorites => @favorites, :generate_spree_api_key! => false, :last_incomplete_spree_order => nil)

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Spree::Favorite do
-  it { should allow_mass_assignment_of :product_id }
   it { should belong_to(:product) }
   it { should belong_to(:user) }
   it { should validate_uniqueness_of(:product_id).scoped_to(:user_id).with_message("already marked as favorite") }
