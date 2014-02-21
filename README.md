@@ -6,6 +6,8 @@ This extension adds the following features:
 2. Favorite Products tab on header
 3. Favorite Products tab in admin section 
 
+It is comptabile with Spree 2.1.x (Rails4)
+
 Installation
 ------------
 
