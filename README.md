@@ -2,11 +2,10 @@ SpreeFavoriteProducts [![Code Climate](https://codeclimate.com/github/vinsol/spr
 =====================
 
 This extension adds the following features:
+
 1. Adds a link 'Mark as favorite' on product detail page.
 2. Favorite Products tab on header
 3. Favorite Products tab in admin section 
-
-It is comptabile with Spree 2.1.x (Rails4)
 
 Installation
 ------------
@@ -15,6 +14,12 @@ Add spree_favorite_products to your Gemfile:
 
 ```ruby
 gem 'spree_favorite_products'
+```
+
+If you're still using Spree 2.0.x, you should do this instead:
+
+```ruby
+gem 'spree_favorite_products', '1.0.0'
 ```
 
 Bundle your dependencies and run the installation generator:
