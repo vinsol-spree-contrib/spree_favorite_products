@@ -11,7 +11,7 @@ describe Spree::FavoriteProductsController do
 
   shared_examples_for "request which finds favorite product" do
     it "finds favorite product" do
-      @current_user_favorites.should_receive(:where).with(:spree_products => {:permalink => 'permalink'})
+      @current_user_favorites.should_receive(:where).with(:spree_products => {:id => 'id'})
       send_request
     end
 
@@ -84,12 +84,15 @@ describe Spree::FavoriteProductsController do
 
   describe 'GET index' do
     def send_request
-      get :index, :use_route => 'spree'
+      get :index, :page => 'current_page', :use_route => 'spree'
     end
 
     before(:each) do
-      @favorite_product = mock_model(Spree::Product)
-      @user = mock_model(Spree::User, :favorite_products => [@favorite_product], :generate_spree_api_key! => false, :last_incomplete_spree_order => nil)
+      @favorite_products = double('favorite_products')
+      @favorite_products.stub(:page).and_return(@favorite_products)
+      @favorite_products.stub(:per).and_return(@favorite_products)
+      Spree::Config.stub(:favorite_products_per_page).and_return('favorite_products_per_page')
+      @user = mock_model(Spree::User, :favorite_products => @favorite_products, :generate_spree_api_key! => false, :last_incomplete_spree_order => nil)
       controller.stub(:authenticate_spree_user!).and_return(true)
       controller.stub(:spree_current_user).and_return(@user)
     end
@@ -104,15 +107,25 @@ describe Spree::FavoriteProductsController do
       send_request
     end
 
+    it "paginates favorite products" do
+      @favorite_products.should_receive(:page).with('current_page')
+      send_request
+    end
+
+    it "shows Spree::Config.favorite_products_per_page" do
+      @favorite_products.should_receive(:per).with('favorite_products_per_page')
+      send_request
+    end
+
     it "assigns @favorite_products" do
       send_request
-      assigns(:favorite_products).should eq([@favorite_product])
+      assigns(:favorite_products).should eq(@favorite_products)
     end
   end
 
   describe 'destroy' do
     def send_request(params = {})
-      post :destroy, params.merge({:use_route => 'spree', :method => :delete, :format => :js, :id => 'permalink'})
+      post :destroy, params.merge({:use_route => 'spree', :method => :delete, :format => :js, :id => 'id'})
     end
 
     before do

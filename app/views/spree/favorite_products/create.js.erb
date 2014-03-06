@@ -1,1 +1,4 @@
+<% if @success %>
+  $('.favorite_link').attr('href', '<%= favorite_product_path(:id => params[:id]) %>').data('method', 'delete').text('<%= Spree.t(:unmark_as_favorite) %>')
+<% end %>
 alert("<%=j @message%>");
