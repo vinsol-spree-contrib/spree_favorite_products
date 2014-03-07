@@ -1,6 +1,11 @@
 <% if @success %>
-  $("#favorite_product_<%= @favorite.product_id%>").remove();
-  alert("Successfully removed favorite product from your list")
+  if($('.favorite_link').length) {
+    $('.favorite_link').attr('href', '<%= favorite_products_path(:id => @favorite.product_id) %>').data('method', 'post').text('<%= Spree.t(:mark_as_favorite) %>');
+    alert('Successfully unmarked as favorite');
+  } else {
+    $("#favorite_product_<%= @favorite.product_id%>").remove();
+    alert("Successfully removed favorite product from your list");
+  }
 <% else %>
-  alert("Could not remove product form your list")
+  alert("Could not remove product form your list");
 <% end %>
