@@ -16,9 +16,15 @@ Add spree_favorite_products to your Gemfile:
 gem 'spree_favorite_products'
 ```
 
-If you're still using Spree 2.0.x, you should do this instead:
+For older versions of spree.
 
 ```ruby
+# Spree 2.1.x
+gem 'spree_favorite_products', '2.0.1'
+```
+
+```ruby
+# Spree 2.0.x
 gem 'spree_favorite_products', '1.0.0'
 ```
 
