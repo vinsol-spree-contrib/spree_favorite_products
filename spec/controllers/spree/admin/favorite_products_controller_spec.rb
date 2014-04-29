@@ -15,22 +15,51 @@ describe Spree::Admin::FavoriteProductsController do
     roles.stub(:includes).with(:permissions).and_return(roles)
     controller.stub(:authorize_admin).and_return(true)
     controller.stub(:authorize!).and_return(true)
+
+    @favorite_products = double('favorite_products')
+    @favorite_products.stub(:order_by_favorite_users_count).and_return(@favorite_products)
+    @search = double('search', :result => @favorite_products)
+    @favorite_products.stub(:search).and_return(@search)
+    @favorite_products.stub(:page).and_return(@favorite_products)
+    Spree::Product.stub(:favorite).and_return(@favorite_products)
   end
 
   describe "GET index" do
     def send_request
-      get :index, :page => 1 ,:use_route => 'spree'
-    end
-
-    before(:each) do
-      @favorite_products = double('favorite_products')
-      @favorite_products.stub(:page).and_return(@favorite_products)
-      Spree::Product.stub(:favorite).and_return(@favorite_products)
+      get :index, :page => 1 ,:use_route => 'spree', :q => { 's' => 'name desc' }
     end
 
     it "returns favorite products" do
       Spree::Product.should_receive(:favorite)
       send_request
+    end
+
+    it "searches favorite products" do
+      @favorite_products.should_receive(:search).with('s' => 'name desc')
+      send_request
+    end
+
+    it "assigns @search" do
+      send_request
+      assigns(:search).should eq(@search)
+    end
+
+    context 'when order favorite products by users count in asc order' do
+      def send_request
+        get :index, :page => 1 ,:use_route => 'spree', :q => { :s => 'favorite_users_count asc' }
+      end
+
+      it "orders favorite products by users count in asc order" do
+        @favorite_products.should_receive(:order_by_favorite_users_count).with(true)
+        send_request
+      end
+    end
+
+    context 'when order favorite products by users count in desc order' do
+      it "orders favorite products by users count in asc order" do
+        @favorite_products.should_receive(:order_by_favorite_users_count).with(false)
+        send_request
+      end
     end
 
     it "paginates favorite products" do
@@ -67,6 +96,23 @@ describe Spree::Admin::FavoriteProductsController do
 
     after do
       send_request
+    end
+  end
+
+  describe "#sort_in_ascending_users_count?" do
+    
+    context 'when favorite_user_count asc present in params[q][s]' do
+      it "is true" do
+        get :index, :page => 1 ,:use_route => 'spree', :q => { 's' => 'favorite_users_count asc' }
+        controller.send(:sort_in_ascending_users_count?).should be_true
+      end
+    end
+
+    context 'when favorite_user_count not present in params' do
+      it "is false" do
+        get :index, :page => 1 ,:use_route => 'spree', :q => { 's' => 'name asc' }
+        controller.send(:sort_in_ascending_users_count?).should be_false
+      end
     end
   end
 end
