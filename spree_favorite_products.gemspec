@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_favorite_products'
-  s.version     = '2.2.0'
+  s.version     = '2.2.2'
   s.summary     = 'Favorite Products in Spree'
   s.description = 'This extension adds the following features: 1. Adds a link Mark as favorite on product detail page. 2. Favorite Products tab on header 3. Favorite Products tab in admin section'
   s.required_ruby_version = '>= 1.9.3'
