@@ -15,7 +15,7 @@ describe Spree::Product do
   end
 
 
-  it { should have_many(:favorites) }
+  it { should have_many(:favorites).dependent(:destroy) }
   it { should have_many(:favorite_users).through(:favorites).class_name('Spree::User') }
 
   describe "Spree::Product.favorite" do
