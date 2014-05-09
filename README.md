@@ -13,7 +13,7 @@ Installation
 Add spree_favorite_products to your Gemfile:
 
 ```ruby
-gem 'spree_favorite_products'
+gem 'spree_favorite_products', '2.0.2'
 ```
 
 If you're still using Spree 2.0.x, you should do this instead:
