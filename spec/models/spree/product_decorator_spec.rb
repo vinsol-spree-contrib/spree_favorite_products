@@ -14,7 +14,7 @@ describe Spree::Product do
     @user2.favorites.create! :product_id => @favorite_product2.id
   end
 
-  it { should have_many(:favorites) }
+  it { should have_many(:favorites).dependent(:destroy) }
   it { should have_many(:favorite_users).through(:favorites).class_name('Spree::User') }
 
   describe "Spree::Product.favorite" do
