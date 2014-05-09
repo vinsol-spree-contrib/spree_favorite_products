@@ -20,7 +20,7 @@ For older versions of spree.
 
 ```ruby
 # Spree 2.1.x
-gem 'spree_favorite_products', '2.0.1'
+gem 'spree_favorite_products', '2.0.2'
 ```
 
 ```ruby
