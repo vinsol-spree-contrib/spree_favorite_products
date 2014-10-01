@@ -13,7 +13,7 @@ Installation
 Add spree_favorite_products to your Gemfile:
 
 ```ruby
-gem 'spree_favorite_products', github: "THEFIFTHCOLLECTION/spree_favorite_products', branch: '2-3-stable'
+gem 'spree_favorite_products', github: "vinsol/spree_favorite_products', branch: '2-3-stable'
 ```
 
 This is for Spree version 2.3.  For older versions of spree, use the correct branch.
