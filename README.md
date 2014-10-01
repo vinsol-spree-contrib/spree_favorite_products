@@ -5,7 +5,7 @@ This extension adds the following features:
 
 1. Adds a link 'Mark as favorite' on product detail page.
 2. Favorite Products tab on header
-3. Favorite Products tab in admin section 
+3. Favorite Products tab in admin section
 
 Installation
 ------------
@@ -13,20 +13,10 @@ Installation
 Add spree_favorite_products to your Gemfile:
 
 ```ruby
-gem 'spree_favorite_products'
+gem 'spree_favorite_products', github: "THEFIFTHCOLLECTION/spree_favorite_products', branch: '2-3-stable'
 ```
 
-For older versions of spree.
-
-```ruby
-# Spree 2.1.x
-gem 'spree_favorite_products', '2.0.3'
-```
-
-```ruby
-# Spree 2.0.x
-gem 'spree_favorite_products', '1.0.0'
-```
+This is for Spree version 2.3.  For older versions of spree, use the correct branch.
 
 Bundle your dependencies and run the installation generator:
 
@@ -52,6 +42,16 @@ Simply add this require statement to your spec_helper:
 ```ruby
 require 'spree_favorite_products/factories'
 ```
+
+Thought you should know:
+During the test app build, there will be two warnings that arise due to a habtm issue, see [rails issue #15022](https://github.com/rails/rails/issues/15022)
+
+```shell
+/Users/deft/vendor/bundle/gems/activerecord-4.1.6/lib/active_record/associations.rb:1585: warning: already initialized constant Spree::ShippingMethod::HABTM_Zones
+/Users/deft/vendor/bundle/gems/activerecord-4.1.6/lib/active_record/associations.rb:1585: warning: previous definition of HABTM_Zones was here
+```
+These warnings do not appear to interfere with functionality. Please let me know otherwise.
+
 
 Contributing
 ------------
