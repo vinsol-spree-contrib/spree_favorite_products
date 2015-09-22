@@ -6,7 +6,7 @@ gem 'spree_auth_devise', github: 'spree/spree_auth_devise'#, branch: '2-3-stable
 
 gem 'mysql2'
 
-group :assets do 
+group :assets do
   gem 'coffee-rails', '4.0.1'
 end
 
