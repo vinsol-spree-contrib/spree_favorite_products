@@ -2,8 +2,6 @@
   <%= Spree.t(:listing_favorite_products_users) %>
 <% end %>
 
-<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
-
 <%= paginate @users %>
 
 <% if @users.any? %>
@@ -29,4 +27,3 @@
 <% end %>
 
 <%= paginate @users %>
-

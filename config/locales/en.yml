@@ -2,9 +2,8 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
   spree:
     favorite_products_settings: "Favorite Products Settings"
-    favorite_products_per_page: "Per Page"
+    favorite_products_per_page: "Favorite Products Shown Per Page"
     mark_as_favorite: "Mark as favorite"
     unmark_as_favorite: "Unmark as favorite"
