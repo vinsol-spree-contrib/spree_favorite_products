@@ -2,10 +2,12 @@ require 'spec_helper'
 
 describe Spree::FavoriteProductsController do
 
+  let(:proxy_object) { Object.new }
+
   shared_examples_for "request which requires user authentication" do
     it "authenticates user" do
       controller.should_receive(:authenticate_spree_user!)
-      send_request      
+      send_request
     end
   end
 
@@ -33,15 +35,15 @@ describe Spree::FavoriteProductsController do
 
     before(:each) do
       @favorite = mock_model(Spree::Favorite, :save => true)
-      controller.stub(:authenticate_spree_user!).and_return(true)
-      Spree::Favorite.stub(:new).and_return(@favorite)
+      allow(controller).to receive(:authenticate_spree_user!).and_return(true)
+      allow(Spree::Favorite).to receive(:new).and_return(@favorite)
       @user = mock_model(Spree::User, :favorites => Spree::Favorite, :generate_spree_api_key! => false, :last_incomplete_spree_order => nil)
-      controller.stub(:spree_current_user).and_return(@user)
+      allow(controller).to receive(:spree_current_user).and_return(@user)
     end
 
     it_behaves_like "request which requires user authentication"
 
-      
+
     it "creates favorite" do
       Spree::Favorite.should_receive(:new).with(:product_id => 1)
       send_request
@@ -66,8 +68,9 @@ describe Spree::FavoriteProductsController do
 
     context "when favorite not saved sucessfully" do
       before(:each) do
-        @favorite.stub(:save).and_return(false)
-        @favorite.stub_chain(:errors, :full_messages).and_return(["Product already marked as favorite"])
+        allow(@favorite).to receive(:save).and_return(false)
+        allow(@favorite).to receive(:errors).and_return(proxy_object)
+        allow(proxy_object).to receive(:full_messages).and_return(["Product already marked as favorite"])
       end
 
       it "renders create template" do
@@ -89,12 +92,12 @@ describe Spree::FavoriteProductsController do
 
     before(:each) do
       @favorite_products = double('favorite_products')
-      @favorite_products.stub(:page).and_return(@favorite_products)
-      @favorite_products.stub(:per).and_return(@favorite_products)
-      Spree::Config.stub(:favorite_products_per_page).and_return('favorite_products_per_page')
+      allow(@favorite_products).to receive(:page).and_return(@favorite_products)
+      allow(@favorite_products).to receive(:per).and_return(@favorite_products)
+      allow(Spree::Config).to receive(:favorite_products_per_page).and_return('favorite_products_per_page')
       @user = mock_model(Spree::User, :favorite_products => @favorite_products, :generate_spree_api_key! => false, :last_incomplete_spree_order => nil)
-      controller.stub(:authenticate_spree_user!).and_return(true)
-      controller.stub(:spree_current_user).and_return(@user)
+      allow(controller).to receive(:authenticate_spree_user!).and_return(true)
+      allow(controller).to receive(:spree_current_user).and_return(@user)
     end
 
     it "authenticates user" do
@@ -131,13 +134,13 @@ describe Spree::FavoriteProductsController do
     before do
       @favorite = mock_model(Spree::Favorite)
       @current_user_favorites = double('spree_favorites')
-      @current_user_favorites.stub(:where).and_return([@favorite])
-      @current_user_favorites.stub(:readonly).and_return(@current_user_favorites)
+      allow(@current_user_favorites).to receive(:where).and_return([@favorite])
+      allow(@current_user_favorites).to receive(:readonly).and_return(@current_user_favorites)
       @favorites = double('spree_favorites')
-      @favorites.stub(:joins).with(:product).and_return(@current_user_favorites)
+      allow(@favorites).to receive(:joins).with(:product).and_return(@current_user_favorites)
       @user = mock_model(Spree::User, :favorites => @favorites, :generate_spree_api_key! => false, :last_incomplete_spree_order => nil)
-      controller.stub(:authenticate_spree_user!).and_return(true)
-      controller.stub(:spree_current_user).and_return(@user)
+      allow(controller).to receive(:authenticate_spree_user!).and_return(true)
+      allow(controller).to receive(:spree_current_user).and_return(@user)
     end
 
     it_behaves_like "request which requires user authentication"
@@ -155,18 +158,18 @@ describe Spree::FavoriteProductsController do
 
       context 'when destroyed successfully' do
         before(:each) do
-          @favorite.stub(:destroy).and_return(true)
+          allow(@favorite).to receive(:destroy).and_return(true)
         end
 
         it "sets @success to true" do
           send_request
           assigns(:success).should eq(true)
-        end 
+        end
       end
 
       context 'when not destroyed' do
         before(:each) do
-          @favorite.stub(:destroy).and_return(false)
+          allow(@favorite).to receive(:destroy).and_return(false)
         end
 
         it 'sets @success to false' do

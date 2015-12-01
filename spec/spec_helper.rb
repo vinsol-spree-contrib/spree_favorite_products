@@ -1,5 +1,7 @@
 # Run Coverage report
 require 'simplecov'
+require 'minitest/autorun'
+
 SimpleCov.start do
   add_group 'Controllers', 'app/controllers'
   add_group 'Helpers', 'app/helpers'

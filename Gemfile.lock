@@ -332,7 +332,6 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (= 4.0.1)
   database_cleaner
-  minitest
   mysql2
   rspec-rails (~> 2.10)
   sass-rails (~> 5.0)
