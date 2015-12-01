@@ -3,10 +3,10 @@ Deface::Override.new(
   :name => 'add_favorite_products_tab',
   :insert_after => "ul:nth-child(2)",
   :text => %Q{
-     <% if can? :admin, Spree::Admin::FavoriteProductsController %>
-       <ul class="nav nav-sidebar">
-         <%= tab :favorite_products, icon: 'bookmark'  %>
-       </ul>
-     <% end %>
+    <% if can? :admin, Spree::Admin::FavoriteProductsController %>
+      <ul class="nav nav-sidebar">
+        <%= tab :favorite_products, icon: 'bookmark'  %>
+      </ul>
+    <% end %>
   }
 )
