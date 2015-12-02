@@ -2,12 +2,10 @@
   <%= Spree.t(:listing_favorite_products) %>
 <% end %>
 
-<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
-
 <%= paginate @favorite_products %>
 
 <% if @favorite_products.any? %>
-  <table class="index" id="listing_products">
+  <table class="table" id="listing_products">
     <colgroup>
        <col style="width: 15%;">
        <col style="width: 10%;">
@@ -43,4 +41,3 @@
 <% end %>
 
 <%= paginate @favorite_products %>
-
