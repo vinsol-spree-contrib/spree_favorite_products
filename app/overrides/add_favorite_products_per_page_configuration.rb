@@ -1,7 +1,7 @@
 Deface::Override.new(
   :virtual_path => 'spree/admin/general_settings/edit',
   :name => 'add_favorite_products_per_page_configuration',
-  :insert_top => "#preferences fieldset",
+  :insert_before => "#preferences fieldset .form-actions",
   :text => %Q{
     <div class="row">
       <div class="col-md-6">
