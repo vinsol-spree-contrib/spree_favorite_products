@@ -1,3 +1,4 @@
 /spec/dummy
 /coverage
 .DS_STORE
+.ruby-version
