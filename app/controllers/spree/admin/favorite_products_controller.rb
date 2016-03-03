@@ -3,12 +3,12 @@ module Spree
     class FavoriteProductsController < Spree::Admin::BaseController
 
       def index
-        @search = Spree::Product.favorite.search(params[:q])
+        @search = Spree::Product.favorite.includes(master: :images).search(params[:q])
         @favorite_products = @search.result.order_by_favorite_users_count(sort_in_ascending_users_count?).page(params[:page])
       end
 
       def users
-        @product = Spree::Product.where(:id => params[:id]).first
+        @product = Spree::Product.find_by(id: params[:id])
         @users = @product.favorite_users.page(params[:page])
       end
 

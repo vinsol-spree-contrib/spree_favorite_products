@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.description = 'This extension adds the following features: 1. Adds a link Mark as favorite on product detail page. 2. Favorite Products tab on header 3. Favorite Products tab in admin section'
   s.required_ruby_version = '>= 2.0.0'
 
-  s.author    = 'Mohit Bansal'
+  s.author    = 'Nimish Gupta'
   s.email     = 'info@vinsol.com'
   s.homepage  = 'http://vinsol.com'
   s.license   = "MIT"
@@ -17,5 +17,5 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree_core', '~> 3.0.0'
+  s.add_dependency 'spree_core', '~>3.1.0beta'
 end
