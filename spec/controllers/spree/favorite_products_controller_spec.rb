@@ -13,7 +13,7 @@ describe Spree::FavoriteProductsController do
 
   shared_examples_for "request which finds favorite product" do
     it "finds favorite product" do
-      @current_user_favorites.should_receive(:where).with(:spree_products => {:id => 'id'})
+      @current_user_favorites.should_receive(:find_by).with(:spree_products => {:id => 'id'})
       send_request
     end
 
@@ -134,7 +134,7 @@ describe Spree::FavoriteProductsController do
     before do
       @favorite = mock_model(Spree::Favorite)
       @current_user_favorites = double('spree_favorites')
-      allow(@current_user_favorites).to receive(:where).and_return([@favorite])
+      allow(@current_user_favorites).to receive(:find_by).and_return(@favorite)
       allow(@current_user_favorites).to receive(:readonly).and_return(@current_user_favorites)
       @favorites = double('spree_favorites')
       allow(@favorites).to receive(:joins).with(:product).and_return(@current_user_favorites)

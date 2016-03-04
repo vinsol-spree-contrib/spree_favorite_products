@@ -20,6 +20,7 @@ describe Spree::Admin::FavoriteProductsController do
     allow(controller).to receive(:authorize!).and_return(true)
 
     @favorite_products = double('favorite_products')
+    allow(@favorite_products).to receive(:includes).and_return(@favorite_products)
     allow(@favorite_products).to receive(:order_by_favorite_users_count).and_return(@favorite_products)
     @search = double('search', :result => @favorite_products)
     allow(@favorite_products).to receive(:search).and_return(@search)
@@ -81,8 +82,8 @@ describe Spree::Admin::FavoriteProductsController do
       @users = [@user]
       allow(@users).to receive(:page).and_return(@users)
       allow(product).to receive(:favorite_users).and_return(@users)
-      @products = [product]
-      allow(Spree::Product).to receive(:where).with(:id => product.id).and_return(@products)
+      @product = product
+      allow(Spree::Product).to receive(:find_by).with(:id => product.id).and_return(@product)
     end
 
     def send_request
@@ -90,7 +91,7 @@ describe Spree::Admin::FavoriteProductsController do
     end
 
     it 'fetches the product' do
-      Spree::Product.should_receive(:where).with(:id => product.id).and_return(@products)
+      Spree::Product.should_receive(:find_by).with(:id => product.id).and_return(@product)
     end
 
     it 'fetches the users who marked the product as favorite' do
