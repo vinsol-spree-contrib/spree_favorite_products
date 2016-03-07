@@ -346,7 +346,6 @@ DEPENDENCIES
   spree!
   spree_auth_devise!
   spree_favorite_products!
-  sqlite3
   test-unit
 
 BUNDLED WITH
