@@ -80,4 +80,7 @@ RSpec.configure do |config|
   end
 
   config.fail_fast = ENV['FAIL_FAST'] || false
+  config.include Spree::TestingSupport::ControllerRequests, type: :controller
+  config.infer_spec_type_from_file_location!
+  config.expose_current_running_example_as :example
 end

@@ -1,12 +1,13 @@
 source 'https://rubygems.org'
 
 # Provides basic authentication functionality for testing parts of your engine
-gem 'spree', '~> 3.0.0'
-gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '3-0-stable'
-gem 'mysql2'
+gem "minitest"
+gem 'test-unit'
+gem 'spree', github: 'spree/spree', branch: 'master'
+gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: 'master'
 gem 'sass-rails', '~> 5.0'
 
-group :assets do 
+group :assets do
   gem 'coffee-rails', '4.0.1'
 end
 
@@ -15,5 +16,6 @@ group :test do
   gem 'shoulda-matchers', '2.2.0'
   gem 'simplecov', :require => false
   gem 'database_cleaner'
+  gem 'rspec-activemodel-mocks'
 end
 gemspec
