@@ -30,7 +30,7 @@ describe Spree::Admin::FavoriteProductsController do
 
   describe "GET index" do
     def send_request
-      get :index, :page => 1 ,:use_route => 'spree', :q => { 's' => 'name desc' }
+      get :index, :page => 1, :q => { 's' => 'name desc' }
     end
 
     it "returns favorite products" do
@@ -50,7 +50,7 @@ describe Spree::Admin::FavoriteProductsController do
 
     context 'when order favorite products by users count in asc order' do
       def send_request
-        get :index, :page => 1 ,:use_route => 'spree', :q => { :s => 'favorite_users_count asc' }
+        get :index, :page => 1, :q => { :s => 'favorite_users_count asc' }
       end
 
       it "orders favorite products by users count in asc order" do
@@ -83,15 +83,15 @@ describe Spree::Admin::FavoriteProductsController do
       allow(@users).to receive(:page).and_return(@users)
       allow(product).to receive(:favorite_users).and_return(@users)
       @product = product
-      allow(Spree::Product).to receive(:find_by).with(:id => product.id).and_return(@product)
+      allow(Spree::Product).to receive(:find_by).with(:id => product.id.to_s).and_return(@product)
     end
 
     def send_request
-      get :users, :use_route => 'spree', :id => product.id, :format => :js
+      get :users, :id => product.id, :format => :js
     end
 
     it 'fetches the product' do
-      Spree::Product.should_receive(:find_by).with(:id => product.id).and_return(@product)
+      Spree::Product.should_receive(:find_by).with(:id => product.id.to_s).and_return(@product)
     end
 
     it 'fetches the users who marked the product as favorite' do
@@ -107,14 +107,14 @@ describe Spree::Admin::FavoriteProductsController do
 
     context 'when favorite_user_count asc present in params[q][s]' do
       it "is true" do
-        get :index, :page => 1 ,:use_route => 'spree', :q => { 's' => 'favorite_users_count asc' }
-        controller.send(:sort_in_ascending_users_count?).should be_true
+        get :index, :page => 1, :q => { 's' => 'favorite_users_count asc' }
+        controller.send(:sort_in_ascending_users_count?).should be true
       end
     end
 
     context 'when favorite_user_count not present in params' do
       it "is false" do
-        get :index, :page => 1 ,:use_route => 'spree', :q => { 's' => 'name asc' }
+        get :index, :page => 1, :q => { 's' => 'name asc' }
         controller.send(:sort_in_ascending_users_count?).should be false
       end
     end

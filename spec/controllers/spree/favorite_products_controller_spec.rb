@@ -30,7 +30,7 @@ describe Spree::FavoriteProductsController do
 
   describe 'POST create' do
     def send_request
-      post :create, :id => 1, :format => :js, :use_route => 'spree'
+      post :create, :id => 1, :format => :js
     end
 
     before(:each) do
@@ -87,7 +87,7 @@ describe Spree::FavoriteProductsController do
 
   describe 'GET index' do
     def send_request
-      get :index, :page => 'current_page', :use_route => 'spree'
+      get :index, :page => 'current_page'
     end
 
     before(:each) do
@@ -128,7 +128,7 @@ describe Spree::FavoriteProductsController do
 
   describe 'destroy' do
     def send_request(params = {})
-      post :destroy, params.merge({:use_route => 'spree', :method => :delete, :format => :js, :id => 'id'})
+      post :destroy, params.merge({:method => :delete, :format => :js, :id => 'id'})
     end
 
     before do

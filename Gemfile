@@ -15,5 +15,6 @@ group :test do
   gem 'shoulda-matchers', '2.2.0'
   gem 'simplecov', :require => false
   gem 'database_cleaner'
+  gem 'rspec-activemodel-mocks'
 end
 gemspec

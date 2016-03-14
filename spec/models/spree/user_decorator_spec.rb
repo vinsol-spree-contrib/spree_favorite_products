@@ -18,11 +18,11 @@ describe Spree::User do
 
   describe "has_favorite_product?" do
     context "when product in user's favorite products" do
-      it { @user.has_favorite_product?(@product1.id).should be_true }
+      it { @user.has_favorite_product?(@product1.id).should be true }
     end
 
     context 'when product is not in users favorite products' do
-      it { @user.has_favorite_product?(@product2.id).should be_false }
+      it { @user.has_favorite_product?(@product2.id).should be false }
     end
   end
 end
