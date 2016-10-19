@@ -11,16 +11,16 @@ describe Spree::User do
     favorite.save!
   end
 
-  it { should have_many(:favorites).dependent(:destroy) }
-  it { should have_many(:favorite_products).through(:favorites).class_name('Spree::Product') }
+  it { is_expected.to have_many(:favorites).dependent(:destroy) }
+  it { is_expected.to have_many(:favorite_products).through(:favorites).class_name('Spree::Product') }
 
   describe "has_favorite_product?" do
     context "when product in user's favorite products" do
-      it { @user.has_favorite_product?(@product1.id).should be_true }
+      it { expect(@user.has_favorite_product?(@product1.id)).to be_truthy }
     end
 
     context 'when product is not in users favorite products' do
-      it { @user.has_favorite_product?(@product2.id).should be_false }
+      it { expect(@user.has_favorite_product?(@product2.id)).to be_falsey }
     end
   end
 end

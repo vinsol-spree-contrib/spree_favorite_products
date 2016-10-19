@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe Spree::Favorite do
-  it { should belong_to(:product) }
-  it { should belong_to(:user) }
-  it { should validate_uniqueness_of(:product_id).scoped_to(:user_id).with_message("already marked as favorite") }
-  it { should validate_presence_of(:user_id) }
-  it { should validate_presence_of(:product_id) }
+  it { is_expected.to belong_to(:product) }
+  it { is_expected.to belong_to(:user) }
+  it { is_expected.to validate_uniqueness_of(:product_id).scoped_to(:user_id).with_message("already marked as favorite") }
+  it { is_expected.to validate_presence_of(:user_id) }
+  it { is_expected.to validate_presence_of(:product_id) }
 
   context "when product_id is present" do
     before(:each) do
@@ -13,7 +13,7 @@ describe Spree::Favorite do
     end
     it "checks for the presence of product" do
       @favorite.valid?
-      @favorite.errors[:product].should eq(["is invalid"])
+      expect(@favorite.errors[:product]).to eq(["is invalid"])
     end
   end
 
@@ -24,7 +24,7 @@ describe Spree::Favorite do
 
     it "does not validate the presence of product" do
       @favorite.valid?
-      @favorite.errors[:product].should eq([])
+      expect(@favorite.errors[:product]).to eq([])
     end
   end
 end

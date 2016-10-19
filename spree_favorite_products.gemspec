@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
   s.add_dependency 'spree_core', '~> 3.0.0'
+  s.add_dependency 'minitest', '~> 5.9.1'
 end

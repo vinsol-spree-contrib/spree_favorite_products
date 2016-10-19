@@ -15,27 +15,27 @@ describe Spree::Product do
   end
 
 
-  it { should have_many(:favorites).dependent(:destroy) }
-  it { should have_many(:favorite_users).through(:favorites).class_name('Spree::User') }
+  it { is_expected.to have_many(:favorites).dependent(:destroy) }
+  it { is_expected.to have_many(:favorite_users).through(:favorites).class_name('Spree::User') }
 
   describe "Spree::Product.favorite" do
 
 
     it "returns favorite products" do
-      Spree::Product.favorite.should =~ [@favorite_product1, @favorite_product2]
+      expect(Spree::Product.favorite).to match_array([@favorite_product1, @favorite_product2])
     end
   end
 
   describe ".order_by_favorite_users_count" do
     context 'when order not passed' do
       it "returns products ordered by users_count in descending order" do
-        Spree::Product.favorite.order_by_favorite_users_count.should eq([@favorite_product1, @favorite_product2])
+        expect(Spree::Product.favorite.order_by_favorite_users_count).to eq([@favorite_product1, @favorite_product2])
       end
     end
 
     context 'when asc order passed' do
       it "returns products ordered by users_count in ascending order" do
-        Spree::Product.favorite.order_by_favorite_users_count(true).should eq([@favorite_product2, @favorite_product1])
+        expect(Spree::Product.favorite.order_by_favorite_users_count(true)).to eq([@favorite_product2, @favorite_product1])
       end
     end
   end
