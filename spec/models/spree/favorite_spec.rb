@@ -9,7 +9,7 @@ describe Spree::Favorite do
 
   context "when product_id is present" do
     before(:each) do
-      @favorite = Spree::Favorite.new :product_id => 'invalid product id'
+      @favorite = Spree::Favorite.new product_id: 'invalid product id'
     end
     it "checks for the presence of product" do
       @favorite.valid?

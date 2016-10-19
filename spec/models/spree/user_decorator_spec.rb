@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Spree::User do
   before(:each) do
-    @user = Spree::User.create! :email => 'test@example.com', :password => 'spree123'
-    @product1 = Spree::Product.create! :name => 'product1', :price => 100, :shipping_category_id => 1
-    @product2 = Spree::Product.create! :name => 'product2', :price => 100, :shipping_category_id => 1
+    @user = Spree::User.create! email: 'test@example.com', password: 'spree123'
+    @product1 = Spree::Product.create! name: 'product1', price: 100, shipping_category_id: 1
+    @product2 = Spree::Product.create! name: 'product2', price: 100, shipping_category_id: 1
     favorite = Spree::Favorite.new
     favorite.product_id = @product1.id
     favorite.user_id = @user.id

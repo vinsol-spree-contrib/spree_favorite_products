@@ -8,7 +8,7 @@ module Spree
       end
 
       def users
-        @product = Spree::Product.where(:id => params[:id]).first
+        @product = Spree::Product.where(id: params[:id]).first
         @users = @product.favorite_users.page(params[:page])
       end
 

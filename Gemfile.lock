@@ -338,13 +338,13 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (= 4.0.1)
-  database_cleaner
-  mysql2
+  database_cleaner (~> 1.5.3)
+  mysql2 (~> 0.4.4)
   rspec-activemodel-mocks (~> 1.0.3)
   rspec-rails (~> 3.5.2)
   sass-rails (~> 5.0)
   shoulda-matchers (= 3.1.1)
-  simplecov
+  simplecov (~> 0.12.0)
   spree (~> 3.0.0)
   spree_auth_devise!
   spree_favorite_products!

@@ -13,7 +13,7 @@ describe Spree::FavoriteProductsController do
 
   shared_examples_for "request which finds favorite product" do
     it "finds favorite product" do
-      expect(@current_user_favorites).to receive(:where).with(:spree_products => {:id => 'id'})
+      expect(@current_user_favorites).to receive(:where).with(spree_products: {id: 'id'})
       send_request
     end
 
@@ -30,14 +30,14 @@ describe Spree::FavoriteProductsController do
 
   describe 'POST create' do
     def send_request
-      spree_post :create, :id => 1, :format => :js
+      spree_post :create, id: 1, format: :js
     end
 
     before(:each) do
-      @favorite = mock_model(Spree::Favorite, :save => true)
+      @favorite = mock_model(Spree::Favorite, save: true)
       allow(controller).to receive(:authenticate_spree_user!).and_return(true)
       allow(Spree::Favorite).to receive(:new).and_return(@favorite)
-      @user = mock_model(Spree::User, :favorites => Spree::Favorite, :generate_spree_api_key! => false, :last_incomplete_spree_order => nil)
+      @user = mock_model(Spree::User, favorites: Spree::Favorite, generate_spree_api_key!: false, last_incomplete_spree_order: nil)
       allow(controller).to receive(:spree_current_user).and_return(@user)
     end
 
@@ -45,7 +45,7 @@ describe Spree::FavoriteProductsController do
 
 
     it "creates favorite" do
-      expect(Spree::Favorite).to receive(:new).with(:product_id => 1)
+      expect(Spree::Favorite).to receive(:new).with(product_id: 1)
       send_request
     end
 
@@ -87,7 +87,7 @@ describe Spree::FavoriteProductsController do
 
   describe 'GET index' do
     def send_request
-      spree_get :index, :page => 'current_page'
+      spree_get :index, page: 'current_page'
     end
 
     before(:each) do
@@ -95,7 +95,7 @@ describe Spree::FavoriteProductsController do
       allow(@favorite_products).to receive(:page).and_return(@favorite_products)
       allow(@favorite_products).to receive(:per).and_return(@favorite_products)
       allow(Spree::Config).to receive(:favorite_products_per_page).and_return('favorite_products_per_page')
-      @user = mock_model(Spree::User, :favorite_products => @favorite_products, :generate_spree_api_key! => false, :last_incomplete_spree_order => nil)
+      @user = mock_model(Spree::User, favorite_products: @favorite_products, generate_spree_api_key!: false, last_incomplete_spree_order: nil)
       allow(controller).to receive(:authenticate_spree_user!).and_return(true)
       allow(controller).to receive(:spree_current_user).and_return(@user)
     end
@@ -128,7 +128,7 @@ describe Spree::FavoriteProductsController do
 
   describe 'destroy' do
     def send_request(params = {})
-      spree_post :destroy, params.merge({:method => :delete, :format => :js, :id => 'id'})
+      spree_post :destroy, params.merge({method: :delete, format: :js, id: 'id'})
     end
 
     before do
@@ -138,7 +138,7 @@ describe Spree::FavoriteProductsController do
       allow(@current_user_favorites).to receive(:readonly).and_return(@current_user_favorites)
       @favorites = double('spree_favorites')
       allow(@favorites).to receive(:joins).with(:product).and_return(@current_user_favorites)
-      @user = mock_model(Spree::User, :favorites => @favorites, :generate_spree_api_key! => false, :last_incomplete_spree_order => nil)
+      @user = mock_model(Spree::User, favorites: @favorites, generate_spree_api_key!: false, last_incomplete_spree_order: nil)
       allow(controller).to receive(:authenticate_spree_user!).and_return(true)
       allow(controller).to receive(:spree_current_user).and_return(@user)
     end

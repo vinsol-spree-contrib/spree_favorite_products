@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe Spree::Admin::FavoriteProductsController do
-  let(:role) { Spree::Role.create!(:name => 'user') }
+  let(:role) { Spree::Role.create!(name: 'user') }
   let(:roles) { [role] }
   let(:product) { mock_model( Spree::Product) }
   let(:proxy_object) { Object.new }
 
   before(:each) do
-    @user = mock_model(Spree::User, :generate_spree_api_key! => false)
+    @user = mock_model(Spree::User, generate_spree_api_key!: false)
     allow(@user).to receive(:roles).and_return(proxy_object)
     allow(proxy_object).to receive(:includes).and_return([])
 
@@ -21,7 +21,7 @@ describe Spree::Admin::FavoriteProductsController do
 
     @favorite_products = double('favorite_products')
     allow(@favorite_products).to receive(:order_by_favorite_users_count).and_return(@favorite_products)
-    @search = double('search', :result => @favorite_products)
+    @search = double('search', result: @favorite_products)
     allow(@favorite_products).to receive(:search).and_return(@search)
     allow(@favorite_products).to receive(:page).and_return(@favorite_products)
     allow(Spree::Product).to receive(:favorite).and_return(@favorite_products)
@@ -29,7 +29,7 @@ describe Spree::Admin::FavoriteProductsController do
 
   describe "GET index" do
     def send_request
-      spree_get :index, page: 1, :q => { 's' => 'name desc' }
+      spree_get :index, page: 1, q: { 's' => 'name desc' }
     end
 
     it "returns favorite products" do
@@ -49,7 +49,7 @@ describe Spree::Admin::FavoriteProductsController do
 
     context 'when order favorite products by users count in asc order' do
       def send_request
-        spree_get :index, :page => 1, :q => { :s => 'favorite_users_count asc' }
+        spree_get :index, page: 1, q: { s: 'favorite_users_count asc' }
       end
 
       it "orders favorite products by users count in asc order" do
@@ -82,11 +82,11 @@ describe Spree::Admin::FavoriteProductsController do
       allow(@users).to receive(:page).and_return(@users)
       allow(product).to receive(:favorite_users).and_return(@users)
       @products = [product]
-      allow(Spree::Product).to receive(:where).with(:id => product.id.to_s).and_return(@products)
+      allow(Spree::Product).to receive(:where).with(id: product.id.to_s).and_return(@products)
     end
 
     def send_request
-      spree_get :users, :id => product.id, :format => :js
+      spree_get :users, id: product.id, format: :js
     end
 
     it 'fetches the product' do
@@ -106,14 +106,14 @@ describe Spree::Admin::FavoriteProductsController do
 
     context 'when favorite_user_count asc present in params[q][s]' do
       it "is true" do
-        spree_get :index, :page => 1, :q => { 's' => 'favorite_users_count asc' }
+        spree_get :index, page: 1, q: { 's' => 'favorite_users_count asc' }
         expect(controller.send(:sort_in_ascending_users_count?)).to be_truthy
       end
     end
 
     context 'when favorite_user_count not present in params' do
       it "is false" do
-        spree_get :index, :page => 1, :q => { 's' => 'name asc' }
+        spree_get :index, page: 1, q: { 's' => 'name asc' }
         expect(controller.send(:sort_in_ascending_users_count?)).to be_falsey
       end
     end

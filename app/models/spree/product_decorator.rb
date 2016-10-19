@@ -1,6 +1,6 @@
 Spree::Product.class_eval do
-  has_many :favorites, :dependent => :destroy
-  has_many :favorite_users, :through => :favorites, :class_name => 'Spree::User', :source => 'user'
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_users, through: :favorites, class_name: 'Spree::User', source: 'user'
 
   def self.favorite
     joins(:favorites).group('spree_favorites.product_id')
