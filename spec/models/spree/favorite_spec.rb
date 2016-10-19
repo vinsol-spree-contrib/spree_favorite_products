@@ -4,8 +4,8 @@ describe Spree::Favorite do
   it { is_expected.to belong_to(:product) }
   it { is_expected.to belong_to(:user) }
   it { is_expected.to validate_uniqueness_of(:product_id).scoped_to(:user_id).with_message("already marked as favorite") }
-  it { is_expected.to validate_presence_of(:user_id) }
-  it { is_expected.to validate_presence_of(:product_id) }
+  it { is_expected.to validate_presence_of(:user) }
+  it { is_expected.to validate_presence_of(:product) }
 
   context "when product_id is present" do
     before(:each) do
@@ -13,7 +13,7 @@ describe Spree::Favorite do
     end
     it "checks for the presence of product" do
       @favorite.valid?
-      expect(@favorite.errors[:product]).to eq(["is invalid"])
+      expect(@favorite.errors[:product]).to eq(["can't be blank"])
     end
   end
 
@@ -24,7 +24,7 @@ describe Spree::Favorite do
 
     it "does not validate the presence of product" do
       @favorite.valid?
-      expect(@favorite.errors[:product]).to eq([])
+      expect(@favorite.errors[:product]).to eq(["can't be blank"])
     end
   end
 end
