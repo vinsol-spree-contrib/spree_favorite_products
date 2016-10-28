@@ -26,7 +26,7 @@ describe Spree::Product do
     end
   end
 
-  describe ".order_by_favorite_users_count" do
+  pending ".order_by_favorite_users_count" do
     context 'when order not passed' do
       it "returns products ordered by users_count in descending order" do
         expect(Spree::Product.favorite.order_by_favorite_users_count).to eq([@favorite_product1, @favorite_product2])

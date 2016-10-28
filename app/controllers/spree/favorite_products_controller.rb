@@ -1,8 +1,8 @@
 module Spree
   class FavoriteProductsController < Spree::StoreController
 
-    before_filter :authenticate_spree_user!
-    before_filter :find_favorite_product, only: :destroy
+    before_action :authenticate_spree_user!
+    before_action :find_favorite_product, only: :destroy
 
     def index
       @favorite_products = spree_current_user.favorite_products.page(params[:page]).per(Spree::Config.favorite_products_per_page)
@@ -28,7 +28,7 @@ module Spree
 
     private
       def find_favorite_product
-        @favorite = spree_current_user.favorites.joins(:product).readonly(false).where(spree_products: {id: params[:id]}).first
+        @favorite = spree_current_user.favorites.with_product_id(params[:id]).first
       end
   end
 end

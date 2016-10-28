@@ -19,4 +19,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'spree_core', '~> 3.0.0'
   s.add_dependency 'minitest', '~> 5.9.1'
+
+  s.add_development_dependency 'sqlite3'
 end

@@ -13,12 +13,7 @@ describe Spree::FavoriteProductsController do
 
   shared_examples_for "request which finds favorite product" do
     it "finds favorite product" do
-      expect(@current_user_favorites).to receive(:where).with(spree_products: {id: 'id'})
-      send_request
-    end
-
-    it "sets readonly to false" do
-      expect(@current_user_favorites).to receive(:readonly).with(false)
+      expect(@favorites).to receive(:with_product_id).with('id')
       send_request
     end
 
@@ -133,11 +128,8 @@ describe Spree::FavoriteProductsController do
 
     before do
       @favorite = mock_model(Spree::Favorite)
-      @current_user_favorites = double('spree_favorites')
-      allow(@current_user_favorites).to receive(:where).and_return([@favorite])
-      allow(@current_user_favorites).to receive(:readonly).and_return(@current_user_favorites)
       @favorites = double('spree_favorites')
-      allow(@favorites).to receive(:joins).with(:product).and_return(@current_user_favorites)
+      allow(@favorites).to receive(:with_product_id).and_return([@favorite])
       @user = mock_model(Spree::User, favorites: @favorites, generate_spree_api_key!: false, last_incomplete_spree_order: nil)
       allow(controller).to receive(:authenticate_spree_user!).and_return(true)
       allow(controller).to receive(:spree_current_user).and_return(@user)
