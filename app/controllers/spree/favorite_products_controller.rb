@@ -11,7 +11,7 @@ module Spree
     def create
       favorite = spree_current_user.favorites.new product_id: params[:id]
       if @success = favorite.save
-        @message = Spree.t(:successful_favorite_product_marking)
+        @message = Spree.t(:success, scope: [:favorite_products, :create])
       else
         @message = favorite.errors.full_messages.to_sentence
       end
