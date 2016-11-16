@@ -1,3 +1,3 @@
 describe Spree::AppConfiguration do
-  it { Spree::Config.favorite_products_per_page.should eq 10 }
+  it { expect(Spree::Config.favorite_products_per_page).to eq 10 }
 end

@@ -6,11 +6,10 @@ require 'spree/testing_support/extension_rake'
 
 RSpec::Core::RakeTask.new
 
-task :default => [:spec]
+task default: [:spec]
 
 desc 'Generates a dummy app for testing'
 task :test_app do
   ENV['LIB_NAME'] = 'spree_favorite_products'
-  ENV['DB'] = 'mysql'
   Rake::Task['extension:test_app'].invoke
 end
