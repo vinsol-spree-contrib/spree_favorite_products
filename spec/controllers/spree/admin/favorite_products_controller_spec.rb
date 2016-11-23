@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe Spree::Admin::FavoriteProductsController do
-  let(:role) { Spree::Role.create!(:name => 'user') }
+  let(:role) { Spree::Role.create!(name: 'user') }
   let(:roles) { [role] }
   let(:product) { mock_model( Spree::Product) }
   let(:proxy_object) { Object.new }
 
   before(:each) do
-    @user = mock_model(Spree::User, :generate_spree_api_key! => false)
+    @user = mock_model(Spree::User, generate_spree_api_key!: false)
     allow(@user).to receive(:roles).and_return(proxy_object)
     allow(proxy_object).to receive(:includes).and_return([])
 
@@ -22,7 +22,7 @@ describe Spree::Admin::FavoriteProductsController do
     @favorite_products = double('favorite_products')
     allow(@favorite_products).to receive(:includes).and_return(@favorite_products)
     allow(@favorite_products).to receive(:order_by_favorite_users_count).and_return(@favorite_products)
-    @search = double('search', :result => @favorite_products)
+    @search = double('search', result: @favorite_products)
     allow(@favorite_products).to receive(:search).and_return(@search)
     allow(@favorite_products).to receive(:page).and_return(@favorite_products)
     allow(Spree::Product).to receive(:favorite).and_return(@favorite_products)
@@ -30,50 +30,50 @@ describe Spree::Admin::FavoriteProductsController do
 
   describe "GET index" do
     def send_request
-      get :index, :page => 1, :q => { 's' => 'name desc' }
+      get :index, page: 1, q: { s: 'name desc' }
     end
 
     it "returns favorite products" do
-      Spree::Product.should_receive(:favorite)
+      expect(Spree::Product).to receive(:favorite)
       send_request
     end
 
     it "searches favorite products" do
-      @favorite_products.should_receive(:search).with('s' => 'name desc')
+      expect(@favorite_products).to receive(:search).with(s: 'name desc')
       send_request
     end
 
     it "assigns @search" do
       send_request
-      assigns(:search).should eq(@search)
+      expect(assigns(:search)).to eq(@search)
     end
 
     context 'when order favorite products by users count in asc order' do
       def send_request
-        get :index, :page => 1, :q => { :s => 'favorite_users_count asc' }
+        get :index, page: 1, q: { s: 'favorite_users_count asc' }
       end
 
       it "orders favorite products by users count in asc order" do
-        @favorite_products.should_receive(:order_by_favorite_users_count).with(true)
+        expect(@favorite_products).to receive(:order_by_favorite_users_count).with(true)
         send_request
       end
     end
 
     context 'when order favorite products by users count in desc order' do
       it "orders favorite products by users count in asc order" do
-        @favorite_products.should_receive(:order_by_favorite_users_count).with(false)
+        expect(@favorite_products).to receive(:order_by_favorite_users_count).with(false)
         send_request
       end
     end
 
     it "paginates favorite products" do
-      @favorite_products.should_receive(:page).with("1")
+      expect(@favorite_products).to receive(:page).with("1")
       send_request
     end
 
     it "renders favorite products template" do
       send_request
-      response.should render_template(:index)
+      expect(response).to render_template(:index)
     end
   end
 
@@ -87,15 +87,15 @@ describe Spree::Admin::FavoriteProductsController do
     end
 
     def send_request
-      get :users, :id => product.id, :format => :js
+      get :users, id: product.id, format: :js
     end
 
     it 'fetches the product' do
-      Spree::Product.should_receive(:find_by).with(:id => product.id.to_s).and_return(@product)
+      expect(Spree::Product).to receive(:find_by).with(:id => product.id.to_s).and_return(@product)
     end
 
     it 'fetches the users who marked the product as favorite' do
-      product.should_receive(:favorite_users).and_return(@users)
+      expect(product).to receive(:favorite_users).and_return(@users)
     end
 
     after do
@@ -107,14 +107,14 @@ describe Spree::Admin::FavoriteProductsController do
 
     context 'when favorite_user_count asc present in params[q][s]' do
       it "is true" do
-        get :index, :page => 1, :q => { 's' => 'favorite_users_count asc' }
+        get :index, page: 1, q: { s: 'favorite_users_count asc' }
         controller.send(:sort_in_ascending_users_count?).should be true
       end
     end
 
     context 'when favorite_user_count not present in params' do
       it "is false" do
-        get :index, :page => 1, :q => { 's' => 'name asc' }
+        get :index, page: 1, q: { s: 'name asc' }
         controller.send(:sort_in_ascending_users_count?).should be false
       end
     end
