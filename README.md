@@ -1,11 +1,13 @@
-Spree Favorite Products [![Code Climate](https://codeclimate.com/github/vinsol/spree_favorite_products.png)](https://codeclimate.com/github/vinsol/spree_favorite_products) [![Build Status](https://travis-ci.org/vinsol/spree_favorite_products.png?branch=master)](https://travis-ci.org/vinsol/spree_favorite_products)
-=====================
+Spree Favorite Products
+=======================
 
-This extension adds the following features:
+Spree Favorite Products is an extension to provide favorites functionality in a spree application.
 
-1. Adds a link 'Mark as favorite' on product detail page.
-2. Favorite Products tab on header
-3. Favorite Products tab in admin section 
+* This extension allows the user to mark/unkmark a product as favorite from the product page.
+
+* Admin can view which products have been marked as favorite, and by which users, on the Admin end.
+
+* It gives user the ability to see all products marked as favorite by him/her.
 
 Installation
 ------------
@@ -13,24 +15,7 @@ Installation
 Add spree_favorite_products to your Gemfile:
 
 ```ruby
-gem 'spree_favorite_products', github: 'vinsol/spree_favorite_products', branch: '3-0-stable'
-```
-
-For older versions of spree.
-
-```ruby
-# Spree 2.2.x
-gem 'spree_favorite_products', '2.2.3'
-```
-
-```ruby
-# Spree 2.1.x
-gem 'spree_favorite_products', '2.0.3'
-```
-
-```ruby
-# Spree 2.0.x
-gem 'spree_favorite_products', '1.0.0'
+gem 'spree_favorite_products', github: 'vinsol/spree_favorite_products'
 ```
 
 Bundle your dependencies and run the installation generator:
@@ -74,4 +59,4 @@ Credits
 
 [![vinsol.com: Ruby on Rails, iOS and Android developers](http://vinsol.com/vin_logo.png "Ruby on Rails, iOS and Android developers")](http://vinsol.com)
 
-Copyright (c) 2014 [vinsol.com](http://vinsol.com "Ruby on Rails, iOS and Android developers"), released under the New MIT License
+Copyright (c) 2016 [vinsol.com](http://vinsol.com "Ruby on Rails, iOS and Android developers"), released under the New MIT License
