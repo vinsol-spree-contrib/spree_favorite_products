@@ -2,3 +2,4 @@
 /coverage
 .DS_STORE
 .ruby-version
+Gemfile.lock
