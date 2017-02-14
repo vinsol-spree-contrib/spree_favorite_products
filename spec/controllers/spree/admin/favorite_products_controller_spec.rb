@@ -30,7 +30,7 @@ describe Spree::Admin::FavoriteProductsController do
 
   describe "GET index" do
     def send_request
-      get :index, page: 1, q: { s: 'name desc' }
+      get :index, params: { page: 1, q: { s: 'name desc' } }
     end
 
     it "returns favorite products" do
@@ -39,7 +39,8 @@ describe Spree::Admin::FavoriteProductsController do
     end
 
     it "searches favorite products" do
-      expect(@favorite_products).to receive(:search).with(s: 'name desc')
+      search_params = ActionController::Parameters.new(s: 'name desc')
+      expect(@favorite_products).to receive(:search).with(search_params)
       send_request
     end
 
@@ -50,7 +51,7 @@ describe Spree::Admin::FavoriteProductsController do
 
     context 'when order favorite products by users count in asc order' do
       def send_request
-        get :index, page: 1, q: { s: 'favorite_users_count asc' }
+        get :index, params: { page: 1, q: { s: 'favorite_users_count asc' } }
       end
 
       it "orders favorite products by users count in asc order" do
@@ -87,7 +88,7 @@ describe Spree::Admin::FavoriteProductsController do
     end
 
     def send_request
-      get :users, id: product.id, format: :js
+      get :users, params: { id: product.id }, as: :js
     end
 
     it 'fetches the product' do
@@ -106,16 +107,30 @@ describe Spree::Admin::FavoriteProductsController do
   describe "#sort_in_ascending_users_count?" do
 
     context 'when favorite_user_count asc present in params[q][s]' do
+      def send_request
+        get :index, params: { page: 1, q: { s: 'favorite_users_count asc' } }
+      end
+
       it "is true" do
-        get :index, page: 1, q: { s: 'favorite_users_count asc' }
         controller.send(:sort_in_ascending_users_count?).should be true
+      end
+
+      before do
+        send_request
       end
     end
 
     context 'when favorite_user_count not present in params' do
+      def send_request
+        get :index, params: { page: 1, q: { s: 'name asc' } }
+      end
+
       it "is false" do
-        get :index, page: 1, q: { s: 'name asc' }
         controller.send(:sort_in_ascending_users_count?).should be false
+      end
+
+      before do
+        send_request
       end
     end
   end
