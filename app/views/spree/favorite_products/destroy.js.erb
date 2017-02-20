@@ -1,6 +1,6 @@
 <% if @success %>
   if($('.favorite_link').length) {
-    $('.favorite_link').attr('href', '<%= favorite_products_path(:id => @favorite.product_id) %>').data('method', 'post').text('<%= Spree.t(:mark_as_favorite) %>')
+    $('.favorite_link').attr('href', '<%= favorite_products_path(:id => @favorite.product_id) %>').data('method', 'post').addClass('btn-primary').removeClass('btn-danger').text('<%= Spree.t(:mark_as_favorite) %>')
     alert('Successfully unmarked as favorite');
   } else {
     $("#favorite_product_<%= @favorite.product_id%>").remove();
