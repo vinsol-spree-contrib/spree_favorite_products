@@ -4,5 +4,6 @@ Spree::Product.class_eval do
 
   scope :favorite, -> { joins(:favorites).uniq }
   scope :order_by_favorite_users_count, ->(asc = false) { order("count(spree_favorites.user_id) #{asc ? 'asc' : 'desc'}") }
+  scope :group_by_id, -> { group(:id) }
 
 end

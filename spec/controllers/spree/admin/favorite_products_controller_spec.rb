@@ -21,6 +21,7 @@ describe Spree::Admin::FavoriteProductsController do
 
     @favorite_products = double('favorite_products')
     allow(@favorite_products).to receive(:order_by_favorite_users_count).and_return(@favorite_products)
+    allow(@favorite_products).to receive(:group_by_id).and_return(@favorite_products)
     @search = double('search', result: @favorite_products)
     allow(@favorite_products).to receive(:search).and_return(@search)
     allow(@favorite_products).to receive(:page).and_return(@favorite_products)
