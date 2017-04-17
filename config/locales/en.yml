@@ -7,6 +7,7 @@ en:
     favorite_products:
       create:
         success: 'Product has been successfully marked as favorite'
+    favorite_users: "Favorite users"
     favorite_products_per_page: "Favorite Products Shown Per Page"
     favorite_products_settings: "Favorite Products Settings"
     mark_as_favorite: "Mark as favorite"

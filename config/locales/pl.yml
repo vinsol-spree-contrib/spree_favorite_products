@@ -1,0 +1,19 @@
+pl:
+  spree:
+    duplicate_favorite: 'Produkt jest już dodany do ulubionych'
+    favorite_products:
+      title: Ulubione produkty
+      create:
+        success: 'Polubiono produkt!'
+    favorite_products_per_page: "Liczba ulubionych produktów wyświetlona na stronie"
+    favorite_products_settings: "Ustawienia ulubionych produktów"
+    favorite_users: "Użytkownicy"
+    listing_favorite_products: "Lista polubionych produktów"
+    listing_favorite_products_users: "Użytkownicy, którzy polubili produkt"
+    my_favorite_products: Polubione przeze mnie
+    mark_as_favorite: "Dodaj do ulubionych"
+    unmark_as_favorite: "Usuń z ulubionych"
+    you_have_no_favorite_products_yet: "Nie polubiono jeszcze żadnego produktu."
+    admin:
+      tab:
+        favorite_products: "Lista polubionych produktów"
