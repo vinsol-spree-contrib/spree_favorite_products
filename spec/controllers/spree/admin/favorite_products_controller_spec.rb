@@ -77,32 +77,6 @@ describe Spree::Admin::FavoriteProductsController do
     end
   end
 
-  describe "#users" do
-    before do
-      @users = [@user]
-      allow(@users).to receive(:page).and_return(@users)
-      allow(product).to receive(:favorite_users).and_return(@users)
-      @product = product
-      allow(Spree::Product).to receive(:find_by).with(:id => product.id.to_s).and_return(@product)
-    end
-
-    def send_request
-      get :users, id: product.id, format: :js
-    end
-
-    it 'fetches the product' do
-      expect(Spree::Product).to receive(:find_by).with(:id => product.id.to_s).and_return(@product)
-    end
-
-    it 'fetches the users who marked the product as favorite' do
-      expect(product).to receive(:favorite_users).and_return(@users)
-    end
-
-    after do
-      send_request
-    end
-  end
-
   describe "#sort_in_ascending_users_count?" do
 
     context 'when favorite_user_count asc present in params[q][s]' do

@@ -7,11 +7,6 @@ module Spree
         @favorite_products = @search.result.order_by_favorite_users_count(sort_in_ascending_users_count?).page(params[:page])
       end
 
-      def users
-        @product = Spree::Product.find_by(id: params[:id])
-        @users = @product.favorite_users.page(params[:page])
-      end
-
       def destroy
         @favorite = Spree::Favorite.find_by(id: params[:id])
         if @favorite.destroy
