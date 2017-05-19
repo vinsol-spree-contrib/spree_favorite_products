@@ -32,7 +32,7 @@
               <% end %>
               </td>
               <td class="favorite-product-name"><%=link_to product.name, admin_product_path(product) %></td>
-              <td class="favorite-product-remove actions"><%= link_to_delete product, no_text: true, url: admin_favorite_product_path(id: product.favorite.where(user_id: @user.id).first) %>
+              <td class="favorite-product-remove actions"><%= link_to_delete product, no_text: true, url: admin_favorite_product_path(id: product.favorites.where(user_id: @user.id).first) %>
             </tr>
           <% end %>
           </tbody>
