@@ -3,6 +3,9 @@
 
 en:
   spree:
+    admin:
+      tab:
+        favorite_products: Favorite Products
     duplicate_favorite: 'already marked as favorite'
     favorite_products:
       create:
@@ -10,5 +13,14 @@ en:
     favorite_users: "Favorite users"
     favorite_products_per_page: "Favorite Products Shown Per Page"
     favorite_products_settings: "Favorite Products Settings"
-    mark_as_favorite: "Mark as favorite"
-    unmark_as_favorite: "Unmark as favorite"
+    mark_as_favorite: "Mark As Favorite"
+    unmark_as_favorite: "Remove From Favorite"
+    listing_favorite_products: Listing Favorite Products
+    listing_favorite_products_users: Listing Favorite Product Users
+    user_count: User Count
+    my_favorite_products: My Favorite Products
+    product_image: Product Image
+    product_name: Product Name
+    favorites: Favorites
+    are_you_sure_to_remove_product: Are you sure you want to remove the product?
+    login_to_add_favorite: Please Login to Add Favorite
