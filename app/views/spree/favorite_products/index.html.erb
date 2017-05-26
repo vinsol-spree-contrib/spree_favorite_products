@@ -14,7 +14,7 @@
         <tr class="<%= cycle('even', 'odd') %> favorite_product" id="favorite_product_<%= product.id %>">
           <td class="favorite-product-image"><%= link_to mini_image(product), product_path(product) %></td>
           <td class="favorite-product-name"><%= product.name %></td>
-          <td class="favorite-product-remove text-right"><%= link_to 'Remove', favorite_product_path(:id => product.id), :method => :delete, :remote => true, :confirm => 'Are you sure you want to remove the product?' %>
+          <td class="favorite-product-remove text-right"><%= link_to Spree.t(:remove), favorite_product_path(id: product.id), method: :delete, remote: true, confirm: 'Are you sure you want to remove the product?' %>
         </tr>
       <% end %>
       </tbody>
