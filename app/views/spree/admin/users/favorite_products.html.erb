@@ -16,7 +16,7 @@
     <div data-hook="account_my_favorite_products" class="account-my-favorite-products commonform">
       <h3><%= Spree.t(:favorite_products, scope: [:admin, :tab]) %></h3>
       <% if @favorite_products.present? %>
-        <table class="favorite-products order-summary" width="100%">
+        <table class="favorite-products order-summary table table-striped" width="100%">
           <thead>
           <tr>
             <th class="favorite-product-image"><%= Spree.t(:product_image) %></th>
@@ -28,11 +28,13 @@
           <% @favorite_products.each do |product| %>
             <tr class="<%= cycle('even', 'odd') %> favorite_product" id="favorite_product_<%= product.id %>">
               <td class="favorite-product-image"><%= link_to admin_product_path(product) do %>
-              <%= mini_image product %>
-              <% end %>
+                <%= mini_image product %>
+                <% end %>
               </td>
               <td class="favorite-product-name"><%=link_to product.name, admin_product_path(product) %></td>
-              <td class="favorite-product-remove actions"><%= link_to_delete product, no_text: true, url: admin_favorite_product_path(id: product.favorites.where(user_id: @user.id).first) %>
+              <td class="favorite-product-remove actions text-right">
+                <%= link_to_edit product, no_text: true, url: admin_product_path(product) %>
+                <%= link_to_delete product, no_text: true, url: admin_favorite_product_path(id: product.favorites.where(user_id: @user.id).first) %>
             </tr>
           <% end %>
           </tbody>

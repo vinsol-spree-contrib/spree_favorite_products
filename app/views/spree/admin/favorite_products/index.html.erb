@@ -5,31 +5,24 @@
 <%= paginate @favorite_products %>
 
 <% if @favorite_products.any? %>
-  <table class="table" id="listing_products">
-    <colgroup>
-       <col style="width: 15%;">
-       <col style="width: 10%;">
-       <col style="width: 38%;">
-       <col style="width: 10%;">
-       <col style="width: 17%;">
-       <col style="width: 10%;">
-    </colgroup>
+  <table class="table table-striped" id="listing_products">
     <thead>
       <tr data-hook="admin_products_index_headers">
         <th><%= Spree.t(:sku) %></th>
-        <th colspan="2"><%= sort_link @search, :name, Spree.t(:name) %></th>
+        <th><% Spree.t(:image)%></th>
+        <th><%= sort_link @search, :name, Spree.t(:name) %></th>
         <th><%= sort_link @search, :master_default_price_amount, Spree.t(:master_price) %></th>
-        <th><%= sort_link @search, 'favorite_users_count', Spree.t(:favorite_users) %></th>
+        <th class="text-right"><%= sort_link @search, 'favorite_users_count', 'Favorite Users' %></th>
       </tr>
     </thead>
     <tbody>
       <% @favorite_products.each do |product| %>
-          <tr <%= "style='color: red;'" if product.deleted? %> id="<%= spree_dom_id product %>" data-hook="admin_products_index_rows" class="<%= cycle('odd', 'even') %>">
-            <td class="align-center"><%= product.sku rescue '' %></td>
-            <td class="align-center"><%= mini_image(product) %></td>
+          <tr data-hook="admin_products_index_rows">
+            <td ><%= product.sku rescue '' %></td>
+            <td ><%= mini_image(product) %></td>
             <td><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
-            <td class="align-center"><%= product.display_price.to_html rescue '' %></td>
-            <td class='align-center'><%= link_to product.favorite_users.count, users_admin_favorite_product_path(:id => product.id) %></td>
+            <td ><%= product.display_price.to_html rescue '' %></td>
+            <td class="text-right"><%= link_to product.favorite_users.count, users_admin_favorite_product_path(:id => product.id) %></td>
           </tr>
       <% end %>
     </tbody>
