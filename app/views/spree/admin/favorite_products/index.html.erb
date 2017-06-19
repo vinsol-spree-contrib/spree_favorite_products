@@ -12,7 +12,7 @@
         <th><%= Spree.t(:image) %></th>
         <th><%= sort_link @search, :name, Spree.t(:name) %></th>
         <th><%= sort_link @search, :master_default_price_amount, Spree.t(:master_price) %></th>
-        <th class="text-right"><%= sort_link @search, 'favorite_users_count', 'Favorite Users' %></th>
+        <th class="text-right"><%= sort_link @search, 'favorite_users_count', Spree.t(:favorite_users) %></th>
       </tr>
     </thead>
     <tbody>

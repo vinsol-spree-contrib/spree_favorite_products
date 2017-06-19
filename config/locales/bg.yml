@@ -1,0 +1,13 @@
+bg:
+  spree:
+    duplicate_favorite: 'Вече е добавено в любимо'
+    favorite_products:
+      create:
+        success: 'Успешно маркиран като любим'
+    favorite_products_per_page: "Любими продукти на страница"
+    favorite_products_settings: "Любими продукти настойки"
+    mark_as_favorite: "Добави в любими"
+    unmark_as_favorite: "Премахни от любими"
+    admin:
+      tab:
+        favorite_products: "Любими продукти"
