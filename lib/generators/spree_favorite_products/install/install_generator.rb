@@ -6,6 +6,7 @@ module SpreeFavoriteProducts
 
       def add_javascripts
         append_file 'vendor/assets/javascripts/spree/frontend/all.js', "\n//= require store/spree_favorite_products\n"
+        append_file 'vendor/assets/javascripts/spree/frontend/all.js', "\n//= require spree/frontend/spree_favorite_products\n"
         append_file 'vendor/assets/javascripts/spree/backend/all.js', "\n//= require admin/spree_favorite_products\n"
       end
 

@@ -13,7 +13,7 @@ Installation
 Add spree_favorite_products to your Gemfile:
 
 ```ruby
-gem 'spree_favorite_products', github: 'vinsol/spree_favorite_products'
+gem 'spree_favorite_products'
 ```
 
 Bundle your dependencies and run the installation generator:
