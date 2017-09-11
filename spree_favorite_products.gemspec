@@ -18,8 +18,17 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
   s.add_dependency 'spree_core', '~> 3.2.0'
+  s.add_dependency 'spree_extension', '~> 0.0.5'
+
+  s.add_development_dependency 'appraisal'
   s.add_development_dependency 'coffee-rails', '~> 4.2.1'
-  s.add_development_dependency 'sass-rails', '~> 5.0'
+  s.add_development_dependency 'database_cleaner', '~> 1.5.3'
   s.add_development_dependency 'mysql2'
+  s.add_development_dependency 'rails-controller-testing', '~> 1.0.1'
+  s.add_development_dependency 'rspec-rails', '~> 3.5.2'
+  s.add_development_dependency 'rspec-activemodel-mocks', '~> 1.0.3'
+  s.add_development_dependency 'sass-rails', '~> 5.0'
+  s.add_development_dependency 'shoulda-matchers', '3.1.1'
+  s.add_development_dependency 'simplecov', '~> 0.12.0'
   s.add_development_dependency 'sqlite3'
 end

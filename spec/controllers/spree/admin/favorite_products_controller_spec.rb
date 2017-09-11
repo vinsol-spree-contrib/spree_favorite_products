@@ -86,7 +86,7 @@ describe Spree::Admin::FavoriteProductsController do
       end
 
       it "is true" do
-        controller.send(:sort_in_ascending_users_count?).should be true
+        expect(controller.send(:sort_in_ascending_users_count?)).to be true
       end
 
       before do
@@ -100,7 +100,7 @@ describe Spree::Admin::FavoriteProductsController do
       end
 
       it "is false" do
-        controller.send(:sort_in_ascending_users_count?).should be false
+        expect(controller.send(:sort_in_ascending_users_count?)).to be false
       end
 
       before do

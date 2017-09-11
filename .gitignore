@@ -4,3 +4,5 @@
 .ruby-version
 Gemfile.lock
 .byebug_history
+.ruby-gemset
+gemfiles/*.gemfile.lock
