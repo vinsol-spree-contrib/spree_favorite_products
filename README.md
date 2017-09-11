@@ -12,13 +12,13 @@ Installation
 
 1. Add this extension to your Gemfile with this line:
 
-  #### Spree >= 3.1
+  #### Spree > 3.3
 
   ```ruby
   gem 'spree_favorite_products', github: 'vinsol-spree-contrib/spree_favorite_products'
   ```
 
-  #### Spree 3.0 and Spree 2.x
+  #### Spree <= 3.3
 
   ```ruby
   gem 'spree_favorite_products', github: 'vinsol-spree-contrib/spree_favorite_products', branch: 'X-X-stable'
