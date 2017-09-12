@@ -1,6 +1,7 @@
 module Spree
   class FavoriteProductsController < Spree::StoreController
 
+    before_action :store_favorite_product_preference, only: :create
     before_action :authenticate_spree_user!
     before_action :find_favorite_product, only: :destroy
 
@@ -29,6 +30,13 @@ module Spree
     private
       def find_favorite_product
         @favorite = spree_current_user.favorites.with_product_id(params[:id]).first
+      end
+
+      def store_favorite_product_preference
+        unless spree_current_user
+          session[:spree_user_return_to] = product_path(id: params[:id], favorite_product_id: params[:id])
+          redirect_to login_path, notice: Spree.t(:login_to_add_favorite)
+        end
       end
   end
 end
