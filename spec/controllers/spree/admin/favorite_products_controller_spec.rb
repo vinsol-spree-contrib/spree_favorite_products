@@ -82,14 +82,14 @@ describe Spree::Admin::FavoriteProductsController do
     context 'when favorite_user_count asc present in params[q][s]' do
       it "is true" do
         get :index, page: 1, q: { s: 'favorite_users_count asc' }
-        controller.send(:sort_in_ascending_users_count?).should be true
+        expect(controller.send(:sort_in_ascending_users_count?)).to be true
       end
     end
 
     context 'when favorite_user_count not present in params' do
       it "is false" do
         get :index, page: 1, q: { s: 'name asc' }
-        controller.send(:sort_in_ascending_users_count?).should be false
+        expect(controller.send(:sort_in_ascending_users_count?)).to be false
       end
     end
   end

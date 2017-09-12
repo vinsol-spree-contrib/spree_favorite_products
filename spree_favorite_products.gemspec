@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_favorite_products'
-  s.version     = '3.1.0'
+  s.version     = '3.1.1'
   s.summary     = 'Favorite Products in Spree'
   s.description = 'This extension adds the following features: 1. Adds a link Mark as favorite on product detail page. 2. Favorite Products tab on header 3. Favorite Products tab in admin section'
   s.required_ruby_version = '>= 2.1.0'
@@ -18,9 +18,16 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
   s.add_dependency 'spree_core', '~> 3.1.0'
+
+  s.add_development_dependency 'appraisal'
   s.add_development_dependency 'coffee-rails', '~> 4.2.1'
   s.add_development_dependency 'sass-rails', '~> 5.0'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'mysql2'
   s.add_development_dependency 'pg'
+  s.add_development_dependency 'rspec-rails', '~> 3.5.2'
+  s.add_development_dependency 'shoulda-matchers', '3.1.1'
+  s.add_development_dependency 'simplecov', '~> 0.12.0'
+  s.add_development_dependency 'database_cleaner', '~> 1.5.3'
+  s.add_development_dependency 'rspec-activemodel-mocks', '~> 1.0.3'
 end
