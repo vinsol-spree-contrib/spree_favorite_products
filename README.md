@@ -7,6 +7,20 @@ Spree Favorite Products
 
 * It gives user the ability to see all products marked as favorite by him/her.
 
+Demo
+----
+Try Spree Favorite Products for Spree 3-1 with direct deployment on Heroku:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/vinsol-spree-contrib/spree-demo-heroku/tree/spree-favorite-products-3-1)
+
+Try Spree Favorite Products for Spree 3-4 with direct deployment on Heroku:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/vinsol-spree-contrib/spree-demo-heroku/tree/spree-favorite-products-3-4)
+
+Try Spree Favorite Products for Spree master with direct deployment on Heroku:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/vinsol-spree-contrib/spree-demo-heroku/tree/spree-favorite-products-master)
+
 Installation
 ------------
 
