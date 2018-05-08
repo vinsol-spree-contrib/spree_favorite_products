@@ -14,5 +14,7 @@ Spree::Core::Engine.routes.draw do
     end
   end
 
-  resources :favorite_products, only: [:index, :create, :destroy]
+  resources :favorite_products, only: [:index, :create, :destroy] do
+    get :change_favorite_option, on: :member
+  end
 end
