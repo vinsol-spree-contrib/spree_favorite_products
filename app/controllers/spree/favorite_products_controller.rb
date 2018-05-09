@@ -6,7 +6,8 @@ module Spree
     before_action :find_favorite_product, only: :destroy
 
     def index
-      @favorite_products = spree_current_user.favorite_products.page(params[:page]).per(Spree::Config.favorite_products_per_page)
+      @favorite_products = spree_current_user.favorite_products
+      @favorite_variants = spree_current_user.favorite_variants
     end
 
     def create
@@ -42,7 +43,12 @@ module Spree
 
       def store_favorite_product_preference
         unless spree_current_user
-          session[:spree_user_return_to] = product_path(id: params[:id], favorite_product_id: params[:id])
+          if params[:type] == 'Spree::Product'
+            session[:spree_user_return_to] = product_path(id: params[:id], favorite_product_id: params[:id])
+          else
+            variant = Spree::Variant.find_by(id: params[:id])
+            session[:spree_user_return_to] = product_path(id: variant.product.id, favorite_product_id: params[:id])
+          end
           redirect_to login_path, notice: Spree.t(:login_to_add_favorite)
         end
       end

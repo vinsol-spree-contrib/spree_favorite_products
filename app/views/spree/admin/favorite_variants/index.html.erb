@@ -1,0 +1,36 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:listing_favorite_variants) %>
+<% end %>
+
+<%= paginate @favorite_variants %>
+
+<% if @favorite_variants.any? %>
+  <table class="table table-striped" id="listing_products">
+    <thead>
+      <tr data-hook="admin_products_index_headers">
+        <th><%= Spree.t(:sku) %></th>
+        <th><%= Spree.t(:image) %></th>
+        <th><%= sort_link @search, :product_name, Spree.t(:name) %></th>
+        <th><%= sort_link @search, :price, Spree.t(:price) %></th>
+        <th class="text-right"><%= sort_link @search, 'favorite_users_count', Spree.t(:favorite_users) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @favorite_variants.each do |variant| %>
+          <tr data-hook="admin_products_index_rows">
+            <td ><%= variant.sku rescue '' %></td>
+            <td ><%= mini_image(variant) %></td>
+            <td><%= link_to variant.product.try(:name), edit_admin_product_variant_path(variant.product, variant) %></td>
+            <td ><%= variant.display_price.to_html rescue '' %></td>
+            <td class="text-right"><%= link_to variant.favorite_users.count, users_admin_favorite_product_path(id: variant.product.id, type: 'variant', item_id: variant.id) %></td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= Spree.t(:no_results) %>
+  </div>
+<% end %>
+
+<%= paginate @favorite_variants %>

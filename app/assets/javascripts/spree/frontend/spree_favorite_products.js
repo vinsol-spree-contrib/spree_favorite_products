@@ -16,8 +16,8 @@ $(document).ready(
   function(){
     var params = getQueryParams(document.location.search);
     if(params['favorite_product_id'] != null){
-      $('#mark-as-favorite').attr('data-remote', true);
-      $('#mark-as-favorite').trigger('click');
+      // $('#mark-as-favorite').attr('data-remote', true);
+      // $('#mark-as-favorite').trigger('click');
     }
   }
 );

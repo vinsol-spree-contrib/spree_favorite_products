@@ -22,7 +22,7 @@
             <td ><%= mini_image(product) %></td>
             <td><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
             <td ><%= product.display_price.to_html rescue '' %></td>
-            <td class="text-right"><%= link_to product.favorite_users.count, users_admin_favorite_product_path(id: product.id) %></td>
+            <td class="text-right"><%= link_to product.favorite_users.count, users_admin_favorite_product_path(id: product.id, type: 'product', item_id: product.id) %></td>
           </tr>
       <% end %>
     </tbody>

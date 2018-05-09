@@ -1,0 +1,10 @@
+Deface::Override.new(
+  virtual_path: 'spree/orders/_line_item',
+  name: 'add_save_for_later_to_cart',
+  insert_bottom: '[data-hook="line_item_description"]',
+  text: '<br/>
+  <% if ( spree_current_user.blank? || !(spree_current_user.has_favorite_variant?(variant.id)) ) %>
+    <%= link_to Spree.t(:mark_as_favorite), favorite_products_path(id: variant.id, type: "Spree::Variant"), method: :post, remote: spree_user_signed_in?, id: "favorite_variant_#{variant.id}" %>
+  <% end %>
+  '
+)

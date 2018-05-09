@@ -1,4 +1,6 @@
 <% if @success %>
-  $('.favorite_link').attr('href', '<%= favorite_product_path(id: params[:id], type: params[:type]) %>').data('method', 'delete').text('<%= Spree.t(:unmark_as_favorite) %>')
+  $('.favorite_link').attr('href', '<%= favorite_product_path(id: params[:id], type: params[:type]) %>').attr('id', 'unmark_as_favorite').data('method', 'delete').text('<%= Spree.t(:unmark_as_favorite) %>')
+  $("#favorite_variant_<%= params[:id]%>").remove();
+
 <% end %>
 alert("<%=j @message%>");
