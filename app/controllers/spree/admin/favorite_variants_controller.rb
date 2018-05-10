@@ -4,7 +4,7 @@ module Spree
 
       def index
         @search = Spree::Variant.favorite.includes(:product, :images).joins(:product).search(params[:q])
-        @favorite_variants = @search.result.order_by_favorite_users_count(sort_in_ascending_users_count?).page(params[:page])
+        @favorite_variants = @search.result.order_by_favorite_users_count(sort_in_ascending_users_count?).page(params[:page]).per(Spree::Config.favorite_products_per_page)
       end
 
       private
