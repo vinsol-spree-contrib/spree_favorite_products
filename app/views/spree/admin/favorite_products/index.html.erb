@@ -11,7 +11,6 @@
         <th><%= Spree.t(:sku) %></th>
         <th><%= Spree.t(:image) %></th>
         <th><%= sort_link @search, :name, Spree.t(:name) %></th>
-        <th><%= sort_link @search, :master_default_price_amount, Spree.t(:master_price) %></th>
         <th class="text-right"><%= sort_link @search, 'favorite_users_count', Spree.t(:favorite_users) %></th>
       </tr>
     </thead>
@@ -21,8 +20,9 @@
             <td ><%= product.sku rescue '' %></td>
             <td ><%= mini_image(product) %></td>
             <td><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
-            <td ><%= product.display_price.to_html rescue '' %></td>
-            <td class="text-right"><%= link_to product.favorite_users.count, users_admin_favorite_product_path(id: product.id, type: 'product', item_id: product.id) %></td>
+            <td class="text-right">
+              <%= link_to product.favorite_users.count, users_admin_favorite_product_path(id: product.id) %>
+            </td>
           </tr>
       <% end %>
     </tbody>

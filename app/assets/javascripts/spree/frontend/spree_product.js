@@ -13,18 +13,12 @@ SpreeProduct.prototype.initialize = function() {
     this.$productPrice.hide();
   }
 
-   var params = getQueryParams(document.location.search),
-      _this = this;
-
+   var params = getQueryParams(document.location.search);
    if (params['favorite_product_id']) {
      $('#variant_id_' + params['favorite_product_id']).click();
-
-     setTimeout(function() {
-       if(_this.$markAsFavorite) {
-         _this.$markAsFavorite.attr('data-remote', true);
-         _this.$markAsFavorite.trigger('click');
-       }
-     }, 1000);
+     if(this.$variants.length == 1){
+       this.markProductFavorite();
+     }
    }
 }
 
@@ -46,8 +40,23 @@ SpreeProduct.prototype.changeFavoriteOption = function() {
 
       success: function(xhr, status) {},
 
-      error: function(e) {}
+      error: function(e) {},
+
+      complete: function() {
+        var params = getQueryParams(document.location.search);
+        if (params['favorite_product_id']) {
+          _this.markProductFavorite();
+        }
+      }
     })
+  }
+}
+
+SpreeProduct.prototype.markProductFavorite = function() {
+  if(this.$markAsFavorite) {
+    this.$markAsFavorite.attr('data-remote', true);
+    this.$markAsFavorite.trigger('click');
+    window.history.replaceState(null, null, window.location.pathname); // remove query param
   }
 }
 
