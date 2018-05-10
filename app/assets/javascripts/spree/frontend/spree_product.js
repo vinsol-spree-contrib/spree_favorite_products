@@ -1,7 +1,7 @@
 function SpreeProduct(options) {
   this.$variants = options.$variants;
   this.$productPrice = options.$productPrice;
-  this.$markAsFavorite = options.$markAsFavorite;
+  this.markAsFavorite = options.markAsFavorite;
 }
 
 SpreeProduct.prototype.initialize = function() {
@@ -20,14 +20,14 @@ SpreeProduct.prototype.modifyDisplay = function() {
 SpreeProduct.prototype.handleQueryParams = function() {
   var params = getQueryParams(document.location.search);
 
-  if (params['favorite_product_id']) {
-    var $variant = $('#variant_id_' + params['favorite_product_id']);
+  if(!params['favorite_product_id']) {
+    return;
+  }
 
-    if($variant.length > 0) {
-      $variant.click();
-    } else {
-      this.markProductFavorite();
-    }
+  if(params['type'] == 'variant') {
+    $('#variant_id_' + params['favorite_product_id']).click();
+  } else {
+    this.markProductFavorite();
   }
 }
 
@@ -62,9 +62,11 @@ SpreeProduct.prototype.changeFavoriteOption = function() {
 }
 
 SpreeProduct.prototype.markProductFavorite = function() {
-  if(this.$markAsFavorite) {
-    this.$markAsFavorite.attr('data-remote', true);
-    this.$markAsFavorite.trigger('click');
+  var $markAsFavorite = $(this.markAsFavorite); //fetch product
+
+  if($markAsFavorite) {
+    $markAsFavorite.attr('data-remote', true);
+    $markAsFavorite.trigger('click');
     window.history.replaceState(null, null, window.location.pathname); // remove query param
   }
 }
@@ -73,7 +75,7 @@ $(function() {
   var options = {
     $variants: $('input[name="variant_id"]'),
     $productPrice: $('[data-hook="product_price"]'),
-    $markAsFavorite: $('#mark-as-favorite')
+    markAsFavorite: '#mark-as-favorite'
   },
   spreeProduct = new SpreeProduct(options);
   spreeProduct.initialize();

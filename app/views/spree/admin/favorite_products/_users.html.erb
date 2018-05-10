@@ -1,8 +1,12 @@
-<% if !@users.present? %>
+<% if !@favorite_product_users.present? && !@favorite_variant_users %>
   <div class="no-objects-found">
     <%= Spree.t(:no_results) %>
   </div>
-<% else %>
+<% end %>
+
+<% if @favorite_product_users.present? %>
+  <%= paginate @favorite_product_users %>
+
   <table class="table table-striped" id="listing_favorite_products_users">
     <thead>
       <tr data-hook="admin_products_index_headers">
@@ -10,7 +14,25 @@
         <th><%= Spree.t(:sku) %></th>
         <th data-hook="admin_users_index_header_actions" class="actions text-right"> <%= Spree.t(:action) %></th>
       </tr>
-      <%= render partial: 'spree/admin/favorite_products/favorited_by_users', locals: { users: @users } %>
+      <%= render partial: 'spree/admin/favorite_products/favorited_by_users', locals: { users: @favorite_product_users, type: 'product' } %>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+<% end %>
+
+<% if @favorite_variant_users.present? %>
+
+  <%= paginate @favorite_variant_users %>
+
+  <table class="table table-striped" id="listing_favorite_products_users">
+    <thead>
+      <tr data-hook="admin_products_index_headers">
+        <th><%= Spree.t(:email) %></th>
+        <th><%= Spree.t(:sku) %></th>
+        <th data-hook="admin_users_index_header_actions" class="actions text-right"> <%= Spree.t(:action) %></th>
+      </tr>
+      <%= render partial: 'spree/admin/favorite_products/favorited_by_users', locals: { users: @favorite_variant_users, type: 'variant' } %>
     </thead>
     <tbody>
     </tbody>
