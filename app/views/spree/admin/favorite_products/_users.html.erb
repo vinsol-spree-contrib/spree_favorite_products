@@ -5,9 +5,11 @@
 <% end %>
 
 <% if @favorite_product_users.present? %>
+  <%= paginate @favorite_product_users, param_name: 'favorite_product_users_page' %>
   <%= render partial: 'spree/admin/favorite_products/table', locals: { users: @favorite_product_users, type: 'product' } %>
 <% end %>
 
 <% if @favorite_variant_users.present? %>
+  <%= paginate @favorite_variant_users, param_name: 'favorite_variant_users_page' %>
   <%= render partial: 'spree/admin/favorite_products/table', locals: { users: @favorite_variant_users, type: 'variant' } %>
 <% end %>
