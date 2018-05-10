@@ -1,11 +1,4 @@
-<%= search_form_for @search, url: users_admin_favorite_product_path(id: @product.id) do |f| %>
-  <%= f.label :sku_eq %>
-  <%= f.search_field :sku_eq %>
-
-  <%= f.submit "search" %>
-<% end %>
-
-<% if !@results.present? %>
+<% if !@users.present? %>
   <div class="no-objects-found">
     <%= Spree.t(:no_results) %>
   </div>
@@ -14,16 +7,12 @@
     <thead>
       <tr data-hook="admin_products_index_headers">
         <th><%= Spree.t(:email) %></th>
+        <th><%= Spree.t(:sku) %></th>
         <th data-hook="admin_users_index_header_actions" class="actions text-right"> <%= Spree.t(:action) %></th>
       </tr>
+      <%= render partial: 'spree/admin/favorite_products/favorited_by_users', locals: { users: @users } %>
     </thead>
     <tbody>
-      <% if params[:q].present? %>
-        <%= render partial: 'spree/admin/favorite_products/favorited_by_users', locals: { users: @favorite_variant_users, type: 'variant' } %>
-      <% else %>
-        <%= render partial: 'spree/admin/favorite_products/favorited_by_users', locals: { users: @favorite_product_users, type: 'product' } %>
-      <% end %>
     </tbody>
   </table>
 <% end %>
-

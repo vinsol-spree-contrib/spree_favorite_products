@@ -21,7 +21,7 @@
             <td ><%= mini_image(variant) %></td>
             <td><%= link_to variant.product.try(:name), edit_admin_product_variant_path(variant.product, variant) %></td>
             <td class="text-right">
-              <%= link_to variant.favorite_users.count, users_admin_favorite_product_path(id: variant.product.id, q: { sku_eq: variant.sku }) %>
+              <%= link_to variant.favorite_users.count, users_admin_favorite_product_path(id: variant.product.id, item_id: variant.id, type: 'variant') %>
             </td>
           </tr>
       <% end %>

@@ -6,20 +6,29 @@ function SpreeProduct(options) {
 
 SpreeProduct.prototype.initialize = function() {
   this.bindEvents();
+  this.modifyDisplay();
+  this.handleQueryParams();
+}
 
-  // if product has variants
-  if(this.$variants.length != 1){
+SpreeProduct.prototype.modifyDisplay = function() {
+  if(this.$variants.length != 1){  // if product has variants
     this.$variants.prop('checked', false);
     this.$productPrice.hide();
   }
+}
 
-   var params = getQueryParams(document.location.search);
-   if (params['favorite_product_id']) {
-     $('#variant_id_' + params['favorite_product_id']).click();
-     if(this.$variants.length == 1){
-       this.markProductFavorite();
-     }
-   }
+SpreeProduct.prototype.handleQueryParams = function() {
+  var params = getQueryParams(document.location.search);
+
+  if (params['favorite_product_id']) {
+    var $variant = $('#variant_id_' + params['favorite_product_id']);
+
+    if($variant.length > 0) {
+      $variant.click();
+    } else {
+      this.markProductFavorite();
+    }
+  }
 }
 
 SpreeProduct.prototype.bindEvents = function() {

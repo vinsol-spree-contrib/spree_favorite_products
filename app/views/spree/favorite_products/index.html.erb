@@ -21,7 +21,7 @@
             <% if product.variants.any? %>
               <%= link_to 'See All Buying Options', product_path(product), class: 'btn btn-success' %>
             <% else %>
-              <%= render partial: 'product_cart_form', locals: { product: product } %>
+              <%= render partial: 'cart_form', locals: { item: product, type: 'product' } %>
             <% end %>
           </td>
           <td class="favorite-product-remove text-right"><%= link_to Spree.t(:remove), favorite_product_path(id: product.id, type: 'Spree::Product'), method: :delete, remote: true, confirm: 'Are you sure you want to remove the product?' %>
@@ -36,7 +36,7 @@
             <br/>
             <%= variant_options variant %>
           </td>
-          <td> <%= render partial: 'variant_cart_form', locals: { product: variant } %> </td>
+          <td> <%= render partial: 'cart_form', locals: { item: variant, type: 'variant' } %> </td>
           <td class="favorite-product-remove text-right"><%= link_to Spree.t(:remove), favorite_product_path(id: variant.id, type: 'Spree::Variant'), method: :delete, remote: true, confirm: 'Are you sure you want to remove the product?' %>
         </tr>
       <% end %>

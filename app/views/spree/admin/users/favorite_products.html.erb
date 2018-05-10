@@ -23,6 +23,7 @@
           <tr>
             <th class="favorite-product-image"><%= Spree.t(:product_image) %></th>
             <th class="favorite-product-name"><%= Spree.t(:product_name) %></th>
+            <th class="favorite-product-sku"><%= Spree.t(:sku) %></th>
             <th class="favorite-product-action actions"></th>
           </tr>
           </thead>
@@ -34,6 +35,7 @@
                 <% end %>
               </td>
               <td class="favorite-product-name"><%=link_to product.name, admin_product_path(product) %></td>
+              <td class="favorite-product-sku"><%=link_to product.sku, admin_product_path(product) %></td>
               <td class="favorite-product-remove actions text-right">
                 <%= link_to_edit product, no_text: true, url: admin_product_path(product) %>
                 <%= link_to_delete product, no_text: true, url: admin_favorite_product_path(id: product.favorites.where(user_id: @user.id).first) %>
@@ -47,6 +49,7 @@
               <% end %>
             </td>
             <td class="favorite-product-name"><%=link_to variant.product.name, admin_product_path(variant.product) %></td>
+            <td class="favorite-product-sku"><%=link_to variant.sku, admin_product_path(variant.product) %></td>
             <td class="favorite-product-remove actions text-right">
               <%= link_to_edit variant, no_text: true, url: edit_admin_product_variant_path(variant.product, variant) %>
               <%= link_to_delete variant, no_text: true, url: admin_favorite_product_path(id: variant.favorites.where(user_id: @user.id).first) %>

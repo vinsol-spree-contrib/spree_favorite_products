@@ -1,17 +1,27 @@
 Spree::Admin::ProductsController.class_eval do
 
-  def favorite_users
-    @search = Spree::Variant.ransack(params[:q])
+  before_action :set_variant, only: :favorite_users
 
-    if params[:q].present?
-      @variant = Spree::Variant.find_by(sku: params[:q][:sku_eq])
-      @favorite_variant_users = Spree::User.joins(:favorite_variants).where(spree_favorites: { favoritable_id: @variant.try(:id), favoritable_type: 'Spree::Variant' })
+  def favorite_users
+    if params[:type] == 'variant'
+      @users = Spree::User.joins(:favorite_variants).
+                           where(spree_favorites: { favoritable_id: @variant.id, favoritable_type: 'Spree::Variant' })
     else
-      variant_ids = @product.variants.pluck(:id)
-      @favorite_product_users = Spree::User.joins(:favorite_products).where(spree_favorites: { favoritable_id: @product.id, favoritable_type: 'Spree::Product' })
-      @favorite_variant_users = Spree::User.joins(:favorite_variants).where(spree_favorites: { favoritable_id: variant_ids, favoritable_type: 'Spree::Variant' })
+      @users = Spree::User.joins(:favorite_products).
+                           where(spree_favorites: { favoritable_id: @product.id, favoritable_type: 'Spree::Product' })
+    end
+  end
+
+  private
+
+    def set_variant
+      return if params[:type] != 'variant'
+
+      @variant = Spree::Variant.find_by(id: params[:item_id])
+      unless @variant.present?
+        flash[:error] = Spree.t(:variant_does_not_exist)
+        redirect_to admin_products_path
+      end
     end
 
-    @results = @search.result
-  end
 end
