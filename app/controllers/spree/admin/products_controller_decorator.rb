@@ -26,8 +26,7 @@ Spree::Admin::ProductsController.class_eval do
     end
 
     def set_favorite_product_users
-      @favorite_product_users = Spree::User.joins(:favorite_products).
-                           where(spree_favorites: { favoritable_id: @product.id, favoritable_type: 'Spree::Product' }).page(params[:favorite_product_users_page]).per(Spree::Config.favorite_users_per_page)
+      @favorite_product_users = @product.favorite_users.page(params[:favorite_product_users_page]).per(Spree::Config.favorite_users_per_page)
     end
 
     def set_favorite_variant_users(id)

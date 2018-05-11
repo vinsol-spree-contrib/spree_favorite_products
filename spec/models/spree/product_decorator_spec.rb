@@ -9,9 +9,9 @@ describe Spree::Product do
     @product2 = Spree::Product.create! name: 'product2', price: 100, shipping_category_id: shipping_category.id
     @user1 = Spree::User.create! email: 'user1@example.com', password: 'example', password_confirmation: "example"
     @user2 = Spree::User.create! email: 'user2@example.com', password: "example", password_confirmation: 'example'
-    @user1.favorites.create! product_id: @favorite_product1.id
-    @user2.favorites.create! product_id: @favorite_product1.id
-    @user2.favorites.create! product_id: @favorite_product2.id
+    @user1.favorites.create! favoritable_id: @favorite_product1.id, favoritable_type: 'Spree::Product'
+    @user2.favorites.create! favoritable_id: @favorite_product1.id, favoritable_type: 'Spree::Product'
+    @user2.favorites.create! favoritable_id: @favorite_product2.id, favoritable_type: 'Spree::Product'
   end
 
 
