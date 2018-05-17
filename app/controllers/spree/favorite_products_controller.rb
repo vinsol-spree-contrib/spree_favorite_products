@@ -45,7 +45,7 @@ module Spree
           respond_to do |format|
             format.html { redirect_to products_path, notice: Spree.t(:product_not_found) }
             format.js do
-              render js: "alert('#{Spree.t(:product_not_found)}');", status: 422 and return
+              render :not_found, status: 422 and return
             end
           end
         end
