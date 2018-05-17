@@ -2,7 +2,7 @@ module Spree
   class FavoriteProductsController < Spree::StoreController
 
     before_action :store_favorite_product_preference, only: :create
-    before_action :authenticate_spree_user!, except: :change_favorite_option
+    before_action :authenticate_spree_user!, except: :get_favoritable_value
     before_action :find_favorite_product, only: :destroy
 
     def index
@@ -11,7 +11,7 @@ module Spree
     end
 
     def create
-      favorite = spree_current_user.favorites.new(permitted_params)
+      favorite = spree_current_user.favorites.new(favoritable_params)
       if @success = favorite.save
         @message = Spree.t(:success, scope: [:favorite_products, :create])
       else
@@ -23,13 +23,14 @@ module Spree
     end
 
     def destroy
-      if @favorite
-        @success = @favorite.destroy
-      end
+      @success = @favorite.destroy
     end
 
-    def change_favorite_option
-      set_variant
+    # returns whether user has favorited a product/variant or not
+    def get_favoritable_value
+      if spree_current_user.present?
+        @favorite = spree_current_user.favorites.where(favoritable_params).first
+      end
 
       respond_to do |format|
         format.js
@@ -38,7 +39,16 @@ module Spree
 
     private
       def find_favorite_product
-        @favorite = spree_current_user.favorites.where(permitted_params).first
+        @favorite = spree_current_user.favorites.where(favoritable_params).first
+
+        unless @favorite.present?
+          respond_to do |format|
+            format.html { redirect_to products_path, notice: Spree.t(:product_not_found) }
+            format.js do
+              render js: "alert('#{Spree.t(:product_not_found)}');", status: 422 and return
+            end
+          end
+        end
       end
 
       def store_favorite_product_preference
@@ -53,17 +63,11 @@ module Spree
         end
       end
 
-      def permitted_params
+      def favoritable_params
         {
           favoritable_id: params[:id],
           favoritable_type: params[:type]
         }
-      end
-
-      def set_variant
-        if spree_current_user.present?
-          find_favorite_product
-        end
       end
   end
 end

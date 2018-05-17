@@ -1,23 +1,23 @@
-function SpreeProduct(options) {
+function FavoritableProduct(options) {
   this.$variants = options.$variants;
   this.$productPrice = options.$productPrice;
-  this.markAsFavorite = options.markAsFavorite;
+  this.productFavoriteButton = options.productFavoriteButton;
 }
 
-SpreeProduct.prototype.initialize = function() {
+FavoritableProduct.prototype.initialize = function() {
   this.bindEvents();
   this.modifyDisplay();
-  this.handleQueryParams();
+  this.processParams();
 }
 
-SpreeProduct.prototype.modifyDisplay = function() {
+FavoritableProduct.prototype.modifyDisplay = function() {
   if(this.$variants.length != 1){  // if product has variants
     this.$variants.prop('checked', false);
     this.$productPrice.hide();
   }
 }
 
-SpreeProduct.prototype.handleQueryParams = function() {
+FavoritableProduct.prototype.processParams = function() {
   var params = getQueryParams(document.location.search);
 
   if(!params['favorite_product_id']) {
@@ -31,27 +31,23 @@ SpreeProduct.prototype.handleQueryParams = function() {
   }
 }
 
-SpreeProduct.prototype.bindEvents = function() {
+FavoritableProduct.prototype.bindEvents = function() {
   this.$variants.on('click', this.changeFavoriteOption());
 }
 
-SpreeProduct.prototype.changeFavoriteOption = function() {
+FavoritableProduct.prototype.changeFavoriteOption = function() {
   var _this = this;
 
   return function() {
     _this.$productPrice.show();
 
     $.ajax({
-      url: '/favorite_products/' + $(this).val() + '/change_favorite_option',
+      url: '/favorite_products/' + $(this).val() + '/get_favoritable_value',
       method: 'GET',
       dataType: 'script',
       data: { type: 'Spree::Variant' },
 
-      success: function(xhr, status) {},
-
-      error: function(e) {},
-
-      complete: function() {
+      success: function(xhr, status) {
         var params = getQueryParams(document.location.search);
         if (params['favorite_product_id']) {
           _this.markProductFavorite();
@@ -61,13 +57,13 @@ SpreeProduct.prototype.changeFavoriteOption = function() {
   }
 }
 
-SpreeProduct.prototype.markProductFavorite = function() {
-  var $markAsFavorite = $(this.markAsFavorite); //fetch product
+FavoritableProduct.prototype.markProductFavorite = function() {
+  var $productFavoriteButton = $(this.productFavoriteButton); //fetch product
 
-  if($markAsFavorite) {
-    $markAsFavorite.attr('data-remote', true);
-    $markAsFavorite.trigger('click');
-    window.history.replaceState(null, null, window.location.pathname); // remove query param
+  if($productFavoriteButton) {
+    $productFavoriteButton.attr('data-remote', true);
+    $productFavoriteButton.trigger('click');
+    window.history.pushState({}, document.title, window.location.pathname); // remove query param
   }
 }
 
@@ -75,8 +71,8 @@ $(function() {
   var options = {
     $variants: $('input[name="variant_id"]'),
     $productPrice: $('[data-hook="product_price"]'),
-    markAsFavorite: '#mark-as-favorite'
+    productFavoriteButton: '#mark-as-favorite'
   },
-  spreeProduct = new SpreeProduct(options);
-  spreeProduct.initialize();
+  favoritableProduct = new FavoritableProduct(options);
+  favoritableProduct.initialize();
 })
