@@ -131,6 +131,8 @@ describe Spree::FavoriteProductsController do
     it_behaves_like "request which requires user authentication"
     it_behaves_like "request which finds favorite product"
 
+    it { is_expected.to use_before_action(:find_favorite_product) }
+
     context 'when @favorite  exist' do
       before(:each) do
         controller.instance_variable_set(:@favorite, @favorite)
@@ -164,5 +166,51 @@ describe Spree::FavoriteProductsController do
       end
     end
 
+    context 'when @favorite does not exist' do
+      before(:each) do
+        allow(@favorite).to receive(:present?).and_return(false)
+        send_request
+      end
+
+      it { is_expected.to respond_with(422) }
+      it 'is expected to return js' do
+        expect(response.headers["Content-Type"]).to eq "text/javascript; charset=utf-8"
+      end
+    end
+
   end
+
+  describe 'get_favoritable_value' do
+    def send_request(params = {})
+      get :get_favoritable_value, params: params.merge({ id: 'id', type: 'Spree::Variant' }), xhr: true
+    end
+
+    before do
+      @favorite = mock_model(Spree::Favorite)
+      @favorites = double('spree_favorites', favoritable_id: 'id', favoritable_type: 'Spree::Variant')
+      @user = mock_model(Spree::User, favorites: @favorites, generate_spree_api_key!: false, last_incomplete_spree_order: nil)
+      allow(@favorites).to receive(:where).and_return([@favorite])
+      allow(controller).to receive(:authenticate_spree_user!).and_return(true)
+      allow(controller).to receive(:spree_current_user).and_return(@user)
+    end
+
+    context 'when favorite exists' do
+      it 'is expected to assign @favorite to product' do
+        send_request
+        expect(assigns(:favorite)).to eq(@favorite)
+      end
+    end
+
+    context 'when favorite does not exists' do
+      before do
+        allow(@favorites).to receive(:where).and_return(Spree::Favorite.none)
+      end
+
+      it 'is expected to assign @favorite to nil' do
+        send_request
+        expect(assigns(:favorite)).to eq(nil)
+      end
+    end
+  end
+
 end
