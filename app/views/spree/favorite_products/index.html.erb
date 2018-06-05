@@ -1,11 +1,14 @@
 <div data-hook="account_my_favorite_products" class="account-my-favorite-products commonform">
   <h3><%= Spree.t(:my_favorite_products) %></h3>
-  <% if @favorite_products.present? %>
+  <% if @favorite_products.empty? && @favorite_variants.empty? %>
+    <p><%= Spree.t(:you_have_no_favorite_products_yet) %></p>
+  <% else %>
     <table class="favorite-products order-summary table table-striped" width="100%">
       <thead>
       <tr>
         <th class="favorite-product-image"><%= Spree.t(:product_image) %></th>
         <th class="favorite-product-name"><%= Spree.t(:product_name) %></th>
+        <th> </th>
         <th class="favorite-product-action text-right"><%= Spree.t(:action) %></th>
       </tr>
       </thead>
@@ -14,14 +17,30 @@
         <tr class="<%= cycle('even', 'odd') %> favorite_product" id="favorite_product_<%= product.id %>">
           <td class="favorite-product-image"><%= link_to mini_image(product), product_path(product) %></td>
           <td class="favorite-product-name"><%= product.name %></td>
-          <td class="favorite-product-remove text-right"><%= link_to Spree.t(:remove), favorite_product_path(id: product.id), method: :delete, remote: true, confirm: 'Are you sure you want to remove the product?' %>
+          <td>
+            <% if product.variants.any? %>
+              <%= link_to 'See All Buying Options', product_path(product), class: 'btn btn-success' %>
+            <% else %>
+              <%= render partial: 'cart_form', locals: { item: product, type: 'product' } %>
+            <% end %>
+          </td>
+          <td class="favorite-product-remove text-right"><%= link_to Spree.t(:remove), favorite_product_path(id: product.id, type: 'Spree::Product'), method: :delete, remote: true, confirm: 'Are you sure you want to remove the product?' %>
+        </tr>
+      <% end %>
+
+      <% @favorite_variants.each do |variant| %>
+        <tr class="<%= cycle('even', 'odd') %> favorite_product" id="favorite_variant_<%= variant.id %>">
+          <td class="favorite-product-image"><%= link_to mini_image(variant), product_path(variant.product) %></td>
+          <td class="favorite-product-name">
+            <%= variant.product.name %>
+            <br/>
+            <%= variant_options variant %>
+          </td>
+          <td> <%= render partial: 'cart_form', locals: { item: variant, type: 'variant' } %> </td>
+          <td class="favorite-product-remove text-right"><%= link_to Spree.t(:remove), favorite_product_path(id: variant.id, type: 'Spree::Variant'), method: :delete, remote: true, confirm: 'Are you sure you want to remove the product?' %>
         </tr>
       <% end %>
       </tbody>
     </table>
-  <% else %>
-    <p><%= Spree.t(:you_have_no_favorite_products_yet) %></p>
   <% end %>
-
-  <%= paginate @favorite_products %>
 </div>

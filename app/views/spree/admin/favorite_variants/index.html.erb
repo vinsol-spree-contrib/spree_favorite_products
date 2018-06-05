@@ -1,27 +1,27 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:listing_favorite_products) %>
+  <%= Spree.t(:listing_favorite_variants) %>
 <% end %>
 
-<%= paginate @favorite_products %>
+<%= paginate @favorite_variants %>
 
-<% if @favorite_products.any? %>
+<% if @favorite_variants.any? %>
   <table class="table table-striped" id="listing_products">
     <thead>
       <tr data-hook="admin_products_index_headers">
         <th><%= Spree.t(:sku) %></th>
         <th><%= Spree.t(:image) %></th>
-        <th><%= sort_link @search, :name, Spree.t(:name) %></th>
+        <th><%= sort_link @search, :product_name, Spree.t(:name) %></th>
         <th class="text-right"><%= sort_link @search, 'favorite_users_count', Spree.t(:favorite_users) %></th>
       </tr>
     </thead>
     <tbody>
-      <% @favorite_products.each do |product| %>
+      <% @favorite_variants.each do |variant| %>
           <tr data-hook="admin_products_index_rows">
-            <td ><%= product.sku rescue '' %></td>
-            <td ><%= mini_image(product) %></td>
-            <td><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
+            <td ><%= variant.sku rescue '' %></td>
+            <td ><%= mini_image(variant) %></td>
+            <td><%= link_to variant.product.try(:name), edit_admin_product_variant_path(variant.product, variant) %></td>
             <td class="text-right">
-              <%= link_to product.favorite_users.count, users_admin_favorite_product_path(id: product.id, type: 'product') %>
+              <%= link_to variant.favorite_users.count, users_admin_favorite_product_path(id: variant.product.id, item_id: variant.id, type: 'variant') %>
             </td>
           </tr>
       <% end %>
@@ -33,4 +33,4 @@
   </div>
 <% end %>
 
-<%= paginate @favorite_products %>
+<%= paginate @favorite_variants %>

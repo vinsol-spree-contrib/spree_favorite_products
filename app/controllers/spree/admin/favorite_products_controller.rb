@@ -3,8 +3,8 @@ module Spree
     class FavoriteProductsController < Spree::Admin::BaseController
 
       def index
-        @search = Spree::Product.favorite.includes(master: :images).search(params[:q])
-        @favorite_products = @search.result.order_by_favorite_users_count(sort_in_ascending_users_count?).page(params[:page])
+        @search = Spree::Product.favorite.search(params[:q])
+        @favorite_products = @search.result.includes(master: :images).joins(:master).order_by_favorite_users_count(sort_in_ascending_users_count?).page(params[:page]).per(Spree::Config.favorite_products_per_page)
       end
 
       def destroy

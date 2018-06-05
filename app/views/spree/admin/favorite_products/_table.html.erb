@@ -1,0 +1,12 @@
+<table class="table table-striped" id="listing_favorite_products_users">
+  <thead>
+    <tr data-hook="admin_products_index_headers">
+      <th><%= Spree.t(:email) %></th>
+      <th><%= Spree.t(:sku) %></th>
+      <th data-hook="admin_users_index_header_actions" class="actions text-right"> <%= Spree.t(:action) %></th>
+    </tr>
+    <%= render partial: 'spree/admin/favorite_products/favorited_by_users', locals: { users: users, type: type } %>
+  </thead>
+  <tbody>
+  </tbody>
+</table>

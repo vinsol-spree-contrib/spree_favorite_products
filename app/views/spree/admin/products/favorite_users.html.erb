@@ -6,9 +6,4 @@
 
 <%= render partial: 'spree/admin/shared/product_tabs', locals: { current: :favorited_by } %>
 
-
-<%= paginate @users if @user.present? %>
-
-<%= render 'spree/admin/favorite_products/users', users: @users %>
-
-<%= paginate @users if @user.present? %>
+<%= render 'spree/admin/favorite_products/users' %>

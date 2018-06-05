@@ -5,6 +5,8 @@ Spree::Core::Engine.routes.draw do
       get :users, on: :member, to: 'products#favorite_users'
     end
 
+    resources :favorite_variants, only: :index
+
     resources :products do
       get :favorite_users, on: :member
     end
@@ -14,5 +16,7 @@ Spree::Core::Engine.routes.draw do
     end
   end
 
-  resources :favorite_products, only: [:index, :create, :destroy]
+  resources :favorite_products, only: [:index, :create, :destroy] do
+    get :get_favoritable_value, on: :member
+  end
 end

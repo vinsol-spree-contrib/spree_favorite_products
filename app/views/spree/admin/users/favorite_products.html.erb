@@ -15,12 +15,15 @@
   <div class="panel-body">
     <div data-hook="account_my_favorite_products" class="account-my-favorite-products commonform">
       <h3><%= Spree.t(:favorite_products, scope: [:admin, :tab]) %></h3>
-      <% if @favorite_products.present? %>
+      <% if @favorite_products.empty? && @favorite_variants.empty? %>
+        <p><%= Spree.t(:you_have_no_favorite_products_yet) %></p>
+      <% else %>
         <table class="favorite-products order-summary table table-striped" width="100%">
           <thead>
           <tr>
             <th class="favorite-product-image"><%= Spree.t(:product_image) %></th>
             <th class="favorite-product-name"><%= Spree.t(:product_name) %></th>
+            <th class="favorite-product-sku"><%= Spree.t(:sku) %></th>
             <th class="favorite-product-action actions"></th>
           </tr>
           </thead>
@@ -32,18 +35,29 @@
                 <% end %>
               </td>
               <td class="favorite-product-name"><%=link_to product.name, admin_product_path(product) %></td>
+              <td class="favorite-product-sku"><%=link_to product.sku, admin_product_path(product) %></td>
               <td class="favorite-product-remove actions text-right">
                 <%= link_to_edit product, no_text: true, url: admin_product_path(product) %>
                 <%= link_to_delete product, no_text: true, url: admin_favorite_product_path(id: product.favorites.where(user_id: @user.id).first) %>
             </tr>
           <% end %>
+
+          <% @favorite_variants.each do |variant| %>
+          <tr class="<%= cycle('even', 'odd') %> favorite_product" id="favorite_product_<%= variant.id %>">
+            <td class="favorite-product-image"><%= link_to admin_product_path(variant.product) do %>
+              <%= mini_image variant %>
+              <% end %>
+            </td>
+            <td class="favorite-product-name"><%=link_to variant.product.name, admin_product_path(variant.product) %></td>
+            <td class="favorite-product-sku"><%=link_to variant.sku, admin_product_path(variant.product) %></td>
+            <td class="favorite-product-remove actions text-right">
+              <%= link_to_edit variant, no_text: true, url: edit_admin_product_variant_path(variant.product, variant) %>
+              <%= link_to_delete variant, no_text: true, url: admin_favorite_product_path(id: variant.favorites.where(user_id: @user.id).first) %>
+          </tr>
+          <% end %>
           </tbody>
         </table>
-      <% else %>
-        <p><%= Spree.t(:you_have_no_favorite_products_yet) %></p>
       <% end %>
-
-      <%= paginate @favorite_products %>
     </div>
   </div>
 </div>

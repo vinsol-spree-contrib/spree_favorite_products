@@ -1,0 +1,5 @@
+<% if @favorite %>
+  $('.favorite_link').attr('href', '<%= favorite_product_path(id: params[:id], type: params[:type]) %>').attr('id', 'unmark-as-favorite').data('method', 'delete').text('<%= Spree.t(:unmark_as_favorite) %>')
+<% else %>
+  $('.favorite_link').attr('href', '<%= favorite_products_path(id: params[:id], type: params[:type]) %>').attr('id', 'mark-as-favorite').data('method', 'post').text('<%= Spree.t(:mark_as_favorite) %>')
+<% end %>

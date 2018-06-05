@@ -25,3 +25,6 @@ en:
     are_you_sure_to_remove_product: Are you sure you want to remove the product?
     login_to_add_favorite: Please Login to Add Favorite
     favorited_by: Favorited By
+    variant_does_not_exist: Variant does not exist
+    save_for_later: Save For Later
+    product_not_found: Product Not Found

@@ -1,0 +1,21 @@
+<% users.each do |user| %>
+  <tr id="<%= spree_dom_id user %>" data-hook="admin_users_index_rows">
+    <td class='user_email'><%=link_to user.email, edit_admin_user_url(user) %></td>
+    <% if type == 'variant' %>
+      <td>
+        <% variant = Spree::Variant.find_by(id: user.favoritable_id) %>
+        <%= variant.sku %>
+      </td>
+      <td data-hook="admin_users_index_row_actions" class="actions actions-2 text-right">
+        <%= link_to_edit user,{ no_text: true, url: edit_admin_user_path(id: user) } %>
+        <%= link_to_delete user, no_text: true, url: admin_favorite_product_path(id: user.favorites.where(favoritable_id: variant.id, favoritable_type: 'Spree::Variant').first) %>
+      </td>
+    <% else %>
+      <td> <%= @product.sku %> </td>
+      <td data-hook="admin_users_index_row_actions" class="actions actions-2 text-right">
+        <%= link_to_edit user,{ no_text: true, url: edit_admin_user_path(id: user) } %>
+        <%= link_to_delete user, no_text: true, url: admin_favorite_product_path(id: user.favorites.where(favoritable_id: @product.id, favoritable_type: 'Spree::Product').first) %>
+      </td>
+    <% end %>
+  </tr>
+<% end %>
