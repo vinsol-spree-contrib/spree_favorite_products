@@ -3,9 +3,15 @@ Spree Favorite Products
 
 * Spree Favorite Products is an extension that allows the user to mark/unkmark a product as favorite from the product page.
 
-* Admin can view which products have been marked as favorite, and by which users, on the Admin end.
+* If a product has variants, user can mark both the product, as well as, any variant as favorite.
+
+* Admin can view which products, as well as, variants have been marked as favorite, and by which users, on the Admin end.
 
 * It gives user the ability to see all products marked as favorite by him/her.
+
+* User can directly add his favorited products to cart
+
+* User can save products for later from his cart.
 
 Demo
 ----
