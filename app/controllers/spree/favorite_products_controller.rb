@@ -4,7 +4,6 @@ module Spree
     before_action :store_favorite_product_preference, only: :create
     before_action :authenticate_spree_user!, except: :get_favoritable_value
     before_action :find_favorite_product, only: :destroy
-    before_action :invalidate_product_cache_key, only: [:create, :destroy]
 
     def index
       @favorite_products = spree_current_user.favorite_products
@@ -39,12 +38,6 @@ module Spree
     end
 
     private
-
-      def invalidate_product_cache_key
-        product = Spree::Product.find_by(id: params[:id])
-        product.try(:touch)
-      end
-
       def find_favorite_product
         @favorite = spree_current_user.favorites.where(favoritable_params).first
 
