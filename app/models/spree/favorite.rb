@@ -1,7 +1,7 @@
 module Spree
   class Favorite < ActiveRecord::Base
     with_options required: true do
-      belongs_to :favoritable, polymorphic: true, counter_cache: :favorite_users_count
+      belongs_to :favoritable, polymorphic: true, counter_cache: :favorite_users_count, touch: true
       belongs_to :user
     end
 
