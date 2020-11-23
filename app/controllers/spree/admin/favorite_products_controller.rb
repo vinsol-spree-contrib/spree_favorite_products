@@ -4,7 +4,7 @@ module Spree
 
       def index
         @search = Spree::Product.favorite.search(params[:q])
-        @favorite_products = @search.result.includes(master: :images).joins(:master).order_by_favorite_users_count(sort_in_ascending_users_count?).page(params[:page]).per(Spree::Config.favorite_products_per_page)
+        @favorite_products = @search.result.includes(master: :images).joins(:master).order_by_favorite_users_count(sort_in_ascending_users_count?).page(params[:page]).per(Spree::AppConfiguration.new.favorite_products_per_page)
       end
 
       def destroy

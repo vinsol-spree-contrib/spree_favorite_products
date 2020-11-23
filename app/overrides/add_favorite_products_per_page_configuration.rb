@@ -7,7 +7,7 @@ Deface::Override.new(
       <div class="col-md-6">
         <div class="form-group" data-hook="admin_general_setting_favorite_products_per_page">
           <%= label_tag :favorite_products_per_page, Spree.t(:favorite_products_per_page) %>
-          <%= text_field_tag :favorite_products_per_page, Spree::Config[:favorite_products_per_page], size: 3 %>
+          <%= text_field_tag :favorite_products_per_page, Spree::AppConfiguration.new[:favorite_products_per_page], size: 3 %>
         </div>
       </div>
     </div>
